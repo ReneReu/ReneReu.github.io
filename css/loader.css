@@ -1,0 +1,201 @@
+.loadingscrn {
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    
+    width: 99%;
+    height: 100%;
+}
+
+.loadingscrnAnim {
+    z-index: 1050;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    
+    width: 100%;
+    height: 100%;
+    
+    transition: all 0.3s ease-out;
+}
+.loadingscrnAnim h1 {
+    color: #292828;
+    font-size: 20px;
+    font-weight: 100;
+    letter-spacing: 2px;
+    transform: scale(0.9,1.2);
+}
+.loadingCircles {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  
+  opacity: 100;
+}
+.loaderC1 {
+    position: absolute;
+    border-radius: 50%;
+
+    border: 5px solid transparent;
+    border-top: 5px solid #292828;
+    width: 190px;
+    height: 190px;
+
+    -webkit-animation: spin1 1.2s linear infinite;
+    animation: spin1 1.2s linear infinite;
+}
+.loaderC2 {
+    position: absolute;
+    border-radius: 50%;
+
+    border: 8px solid transparent;
+    border-top: 8px solid #292828;
+    width: 225px;
+    height: 225px;
+
+    -webkit-animation: spin2 2.2s linear infinite;
+    animation: spin2 2.2s linear infinite;
+}
+.loaderC3 {
+    position: absolute;
+    border-radius: 50%;
+
+    border: 2px solid transparent;
+    border-top: 2px solid #292828;
+    border-bottom: 1px solid #292828;
+    width: 210px;
+    height: 210px;
+
+    -webkit-animation: spin3 2.6s linear infinite;
+    animation: spin3 2.6s linear infinite;
+}
+@-webkit-keyframes spin1 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes spin1 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes spin2 {
+    0% { transform: rotate(40deg); }
+    100% { transform: rotate(400deg); }
+}
+@keyframes spin2 {
+    0% { transform: rotate(40deg); }
+    100% { transform: rotate(400deg); }
+}
+@-webkit-keyframes spin3 {
+    0% { transform: rotate(240deg); }
+    100% { transform: rotate(-120deg); }
+}
+@keyframes spin3 {
+    0% { transform: rotate(240deg); }
+    100% { transform: rotate(-120deg); }
+}
+
+.loadingscrnMid {
+	position: absolute;
+	z-index: 1100;
+	height: 50%;
+	width: 100%;
+	border-bottom: 2px solid transparent;
+	transform: scaleX(0.1); 
+}
+.loadingscrnTop {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #EDEDED;
+    border-bottom: 1px solid transparent;
+}
+.loadingscrnBot {
+    position: absolute;
+	top: 50%;
+    width: 100%;
+    height: 50%;
+    background-color: #EDEDED;
+    border-top: 1px solid transparent;
+}
+
+.loadedAnimation {}
+.loadedAnimation .loadingCircles {
+	-webkit-animation: loadingCircleFade 0.8s 0.2s forwards;
+	animation: loadingCircleFade 0.8s 0.2s forwards;
+}
+.loadedAnimation h1 {
+	-webkit-animation: loadingWordShrink 0.8s 0.0s forwards;
+	animation: loadingWordShrink 0.8s 0.0s forwards;
+}
+.loadedAnimation .loadingscrnMid {
+	-webkit-animation: loadingMidExpand 0.5s 0.5s forwards;
+	animation: loadingMidExpand 0.5s 0.5s forwards;
+}
+.loadedAnimation .loadingscrnTop {
+    -webkit-animation: loadingTopOpen 0.7s 1.0s forwards;
+    animation: loadingTopOpen 0.7s 1.0s forwards;
+}
+.loadedAnimation .loadingscrnBot {
+	-webkit-animation: loadingBotOpen 0.7s 1.0s forwards;
+	animation: loadingBotOpen 0.7s 1.0s forwards;
+}
+  
+@-webkit-keyframes loadingCircleFade {
+	0% {opacity: 100;}
+	100% {opacity: 0;}
+}
+@-webkit-keyframes loadingWordShrink {
+	0% {transform: scale(0.9,1.2);}
+	100% {transform: scale(0.9,0);}
+}
+@-webkit-keyframes loadingMidExpand {
+	0% {transform: scaleX(0.1); border-color: transparent;}
+	20% {transform: scaleX(0.1); border-color: #292828;}
+	95% {transform: scaleX(1); border-color: #292828;}
+	100% {transform: scaleX(1); border-color: transparent;}
+}
+@-webkit-keyframes loadingTopOpen {
+	0% {top: 0%; border-color: transparent;}
+	10% {top: 0%; border-color: #292828;}
+	100% {top: -55%;}
+}
+@-webkit-keyframes loadingBotOpen {
+	0% {top: 50%; border-color: transparent;}
+	10% {top: 50%; border-color: #292828;}
+	100% {top: 105%;}
+}
+@keyframes loadingCircleFade {
+	0% {opacity: 100;}
+	100% {opacity: 0;}
+}
+@keyframes loadingWordShrink {
+	0% {transform: scale(0.9,1.2);}
+	100% {transform: scale(0.9,0);}
+}
+@keyframes loadingMidExpand {
+	0% {transform: scaleX(0.1); border-color: transparent;}
+	20% {transform: scaleX(0.1); border-color: #292828;}
+	95% {transform: scaleX(1); border-color: #292828;}
+	100% {transform: scaleX(1); border-color: transparent;}
+}
+@keyframes loadingTopOpen {
+	0% {top: 0%; border-color: transparent;}
+	10% {top: 0%; border-color: #292828;}
+	100% {top: -55%;}
+}
+@keyframes loadingBotOpen {
+	0% {top: 50%; border-color: transparent;}
+	10% {top: 50%; border-color: #292828;}
+	100% {top: 105%;}
+}
+
+.mediaPreloadingSpace{
+    position: absolute;
+    overflow: hidden;
+    left: -9999px; 
+    top: -9999px;
+    height: 1px;
+    width: 1px;
+}
