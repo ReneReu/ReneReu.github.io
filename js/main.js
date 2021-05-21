@@ -46,10 +46,10 @@ function mainFunction() {
 //--- WORKWORKWORK ---
 //--- --- --- ---
 
-
+    // 6-1 Start-Work-Art-Contact-(Collapse)-Collapse
     var menu = 6;
-
-    var finalWorkNumber= 4;
+    // edit
+    var finalWorkNumber= 5;
     var workNumber = 0;
     var nextWorkNumber;
 
@@ -273,7 +273,6 @@ function mainFunction() {
             $(".workDesc p:nth-child("+workNumber+")").css({"display": "none"});
             $(".workDesc p:nth-child("+nextWorkNumber+")").css({"display": "block"});
 
-            activeWorkSCButton();
             workNumber = nextWorkNumber;   
         }
 
@@ -283,6 +282,7 @@ function mainFunction() {
             //--- animation part old ---
             $(".workBox").addClass("workNextA");
             //--- animation part new ---
+            activeWorkSCButton();
             setTimeout(function(){
                 $(".workBox").addClass("workNextB");
                 changeWorkPicDesc();                    
@@ -295,6 +295,7 @@ function mainFunction() {
             //--- animation part old ---
             $(".workBox").addClass("workPrevA");
             //--- animation part new ---
+            activeWorkSCButton();
             setTimeout(function(){
                 $(".workBox").addClass("workPrevB");                    
                 changeWorkPicDesc();
@@ -311,20 +312,17 @@ function mainFunction() {
         }
 
 
-        //--- work shortcutBar button animation TODO ---
+        //--- work shortcutBar button animation ---
         function buttonDesignLoad() {
-            setTimeout(function() {
-                $(".workShortcutButton:nth-child(1) .workShortcutButtonDesign").addClass("workShortcutButtonDesignLoad").css({"display": "block"});
-            }, 1000);
-            setTimeout(function() {
-                $(".workShortcutButton:nth-child(2) .workShortcutButtonDesign").addClass("workShortcutButtonDesignLoad").css({"display": "block"}); 
-            }, 1250);
-            setTimeout(function() {
-                $(".workShortcutButton:nth-child(3) .workShortcutButtonDesign").addClass("workShortcutButtonDesignLoad").css({"display": "block"}); 
-            }, 1500);
-            setTimeout(function() {
-                $(".workShortcutButton:nth-child(4) .workShortcutButtonDesign").addClass("workShortcutButtonDesignLoad").css({"display": "block"}); 
-            }, 1750);
+
+        
+            for (var i = 0; i <= finalWorkNumber; ++i) {
+                (function(n) {
+                    setTimeout(function(){
+                        $(".workShortcutButton:nth-child("+n+") .workShortcutButtonDesign").addClass("workShortcutButtonDesignLoad").css({"display": "block"});;
+                    }, 350*i);
+                }(i));
+            }
         }
 
         function activeWorkSCButton() {

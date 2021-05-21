@@ -50,7 +50,7 @@
     border: 2px dashed #292828;
 }
 
-/* --- Animations workchanges --- */
+/* --- Animations work showcase change --- */
 .workNextA{
     -webkit-animation: aniNextWA 0.6s forwards;
     animation: aniNextWA 0.6s forwards;
@@ -129,6 +129,9 @@
     background-image: url(../img/w30.jpg); 
 }
 .workPic4 {
+    background-image: url(../img/w40.jpg); 
+}
+.workPic5 {
     background-image: url(../img/w40.jpg); 
 }
 /* --- Work small descriptions ---*/
@@ -246,7 +249,7 @@
         0% {left: -100%;}
         100% {left: 0%;}
     }
-/* --- workframes open/close large desc --- */
+/* --- workframes open/close large desc animations --- */
 .workOpenLargeDesc {
     -webkit-animation: aniOpenLD 0.8s forwards;
     animation: aniOpenLD 0.8s forwards;
@@ -423,20 +426,6 @@
 
     border: 2px solid #292828;
     background-color: #757575;
-}
-
-/*Images Work1*/
-.W1Img1 {
-    background-image: url(../img/w11.jpg); 
-}
-.W1Img2 {
-    background-image: url(../img/w12.jpg); 
-}
-.W1Img3 {
-    background-image: url(../img/w13.jpg); 
-}
-.W1Img4 {
-    background-image: url(../img/w14.jpg); 
 }
 
 .workDescBigPanelEnd {

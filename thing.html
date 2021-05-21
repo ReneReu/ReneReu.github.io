@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Rene Reufels - Portfolio</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.55, minimum-scale=0.1, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="description" content="Webdesign | Photography | Art | Machine Learning"/>
+    
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    
+	<link href="css/pre/reset.css" type="text/css" media="screen" rel="stylesheet">
+	<link href="css/style.css" type="text/css" media="screen" rel="stylesheet">
+    
+    <link href="css/loader.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link href="css/subdom.css" type="text/css" media="screen" rel="stylesheet">    
+    <link href="css/web1.css" type="text/css" media="screen" rel="stylesheet">    
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" language="javascript" src="js/web1.js"></script>
+    
+	<script src="js/modernizr.js"></script>
+	<script src="js/respond.min.js"></script>
+</head>
+
+<body>
+    
+    <div class="loadingscrn">
+        <div class="loadingscrnAnim">
+            <h1 class>L O A D I N G</h1>
+            <div class="loadingCircles">
+                <div class="loaderC1"></div>
+                <div class="loaderC2"></div>
+                <div class="loaderC3"></div>
+            </div>
+        </div>
+        <div class="loadingscrnTop"></div>
+        <div class="loadingscrnMid"></div>
+        <div class="loadingscrnBot"></div>       
+    </div>
+    
+	<header>        
+        <div class="header">  
+            <p>Rene Reufels</p>         
+            <nav class="menu">
+                <ul>
+                    <li><a href="index.html"><div class="menuButton activeMenu">
+                        Back
+                    </div></a></li>                 
+                </ul>      
+            </nav>            
+        </div>
+    </header>
+    
+    <div class="content">
+        
+    </div>
+    
+    
+    <script>
+        $(document).ready(function() {
+            preloading();
+            mainFunction();
+        });
+        
+        var xLoadingTime = 300;
+        
+        function preloading() {
+            setTimeout(function() {
+                $(".loadingscrn").addClass("loadedAnimation");
+            }, xLoadingTime);  
+            setTimeout(function() {
+                $(".loadingscrn").css({"display":"none"});
+            }, 1700 + xLoadingTime);  
+        }
+        
+
+    </script>
+    
+</body>    
+    
+</html>
