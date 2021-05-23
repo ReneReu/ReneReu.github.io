@@ -1,7 +1,7 @@
 function mainFunction() {
     
-//--- --- --- ----
 //--- expand mobile menu ---
+//#region 
     var mobileMenuState = false;
 
     //--- expand / collapse mobile menu ---
@@ -38,7 +38,7 @@ function mainFunction() {
             collapseMoMenu();
        }
     });
-
+//#endregion 
 
 
 
@@ -49,35 +49,40 @@ function mainFunction() {
     // 6-1 Start-Work-Art-Contact-(Collapse)-Collapse
     var menu = 6;
     // edit
-    var finalWorkNumber= 5;
+    var finalWorkNumber = 5;
     var workNumber = 0;
     var nextWorkNumber;
 
-    //--- --- --- ---
     //--- On load animations ---
-    $(document).ready(function() {
+    //#region 
         $(".startToWork, .menu ul li:nth-child(5) div").click(function() {
-            if (menu != 5) {
-                menu = 5;
+            if (menu!=5) {
+                menu=5;
                 onLoadWork();
                 setTimeout(function() {
                     collapseMoMenu();
                 }, 50); 
-            }            
-        });
-        $(".workBoxBack, .menu ul li:nth-child(6) div").click(function() {
-            if (menu != 6) {
-                menu = 6;
-                workEnd(); 
-                setTimeout(function() {
-                    collapseMoMenu();
-                }, 50); 
             }
-        });
-    });
-    
-    //--- --- --- ---
+        });            
+
+        //--TODO should probably do as above/ since removing listener outside work window is not? better perfwise
+        function closeWork() {
+            $(".workBackButton, .menu ul li:nth-child(6) div").click(function() {
+                if (menu!=6) {
+                    menu=6;
+                    workEnd(); 
+                    setTimeout(function() {
+                        collapseMoMenu();
+                    }, 50); 
+                }
+            });
+        }
+        
+
+    //#endregion 
+
     //--- initiate Work animations ---
+    //#region 
         function onLoadWork() {
             nextWorkNumber = 1;
             setTimeout(function() {
@@ -90,6 +95,7 @@ function mainFunction() {
             
             $(".menuButton").removeClass("activeMenu");
             $(".menu ul li:nth-child(5) div").addClass("activeMenu");
+            closeWork();
         }
     
         function workStart() {
@@ -106,7 +112,7 @@ function mainFunction() {
             }, 600);
 
             setTimeout(function() {
-                $(".workBoxBack").removeClass("opacityNone");
+                $(".workBackButton").removeClass("opacityNone");
             }, 1000);      
 
             setTimeout(function() {
@@ -128,7 +134,7 @@ function mainFunction() {
             
             $(".workShortcutSide").addClass("workShortcutSideSwooshOut");
             $(".workShortcutSide").removeClass("workShortcutSideSwooshIn");
-            $(".workBoxBack").addClass("opacityNone");
+            $(".workBackButton").addClass("opacityNone");
 
             $(".menuButton").removeClass("activeMenu");
             $(".menu ul li:nth-child(6) div").addClass("activeMenu");
@@ -148,9 +154,10 @@ function mainFunction() {
                 $(".workContent").css({"display": "none"});   
             }, 800);
         }
+    //#endregion
 
-    //--- --- --- ---
     //--- work showcase selector --- 
+    //#region 
         var workAnimation = false;
         var scrollUp;   
         var jumpDistWorkNumber;  
@@ -158,9 +165,7 @@ function mainFunction() {
         var startY;
         var endY;
 
-    //--- --- --- ---
-    //--- work showcase navigation --- 
-
+        //--- work showcase navigation --- 
         function eventWorkSelectOn() {
             //--- trigger next/prev work by scrolling ---        
             $(window).on("mousewheel DOMMouseScroll", function(eventMouse){
@@ -201,7 +206,6 @@ function mainFunction() {
             $(document).off("touchstart", "body");
         }
 
-
         //--- work shortcutBar directLink --- 
         $(".workShortcutButton").click(function() {
             if (workAnimation === false) {
@@ -222,8 +226,7 @@ function mainFunction() {
             }
         });
 
-    //--- --- --- ---
-    //--- work showcase animation --- 
+        //--- work showcase animation --- 
 
         //--- next/prev work animation ---
         function workAni() {
@@ -330,10 +333,10 @@ function mainFunction() {
             $(".workShortcutButton:nth-child("+nextWorkNumber+") .workShortcutButtonDesign").addClass("workShortcutButtonActive");
         }
 
+    //#endregion 
 
-
-    //--- --- --- ---
     //--- expand work details --- 
+    //#region 
         var expandedWork = false;
 
         //--- greyfilter off/on --- 
@@ -410,12 +413,12 @@ function mainFunction() {
         function expandWorkAnimations() {
             //--- grey animation 08 ---
             $(".workFrame").addClass("removeGreyFilter");  
-            $(".workBoxBack").addClass("opacityNone");        
+            $(".workBackButton").addClass("opacityNone");        
             //--- sidebar animation 08 ---
             $(".workShortcutSide").addClass("workShortcutSideSwooshOut");
 
             setTimeout(function(){    
-                $(".workBoxBack").addClass("displayNone"); 
+                $(".workBackButton").addClass("displayNone"); 
                 //--- desc animation 08 ---
                 $(".workBox").addClass("workOpenLargeDesc");
                 //--- header animation 05 ---
@@ -452,7 +455,7 @@ function mainFunction() {
             $(".workDescBig").addClass("workDescBigFadeOut");
 
             setTimeout(function(){
-                $(".workBoxBack").removeClass("displayNone"); 
+                $(".workBackButton").removeClass("displayNone"); 
                 //--- desc animation 08 ---
                 $(".workBox").addClass("workCloseLargeDesc");
                 $(".workBox").removeClass("workOpenLargeDesc");   
@@ -466,7 +469,7 @@ function mainFunction() {
             }, 1700); 
 
             setTimeout(function(){
-                $(".workBoxBack").removeClass("opacityNone");
+                $(".workBackButton").removeClass("opacityNone");
                 $("header").removeClass("headerGone");
                 $("header").removeClass("headerIn");  
 
@@ -476,5 +479,6 @@ function mainFunction() {
                 $(".workBox").removeClass("workCloseLargeDesc");
             }, 2200);  
         }
+    //#endregion 
 }
 

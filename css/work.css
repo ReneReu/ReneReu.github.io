@@ -5,9 +5,24 @@
     position: absolute;
     display: none;
 }
-/* --- Work Content --- */
+/* --- Work Menu--- */
+.workBackButton {
+    position: absolute;
+    z-index: 11;
+    top: 55px;
+    left: calc(50% - 27px);
+    width: 50px;
+    height: 50px;
+
+    transition: opacity 0.6s ease-in;
+    border: 2px dashed #292828;
+}
+
+/* --- Work Showcase picture and description --- */
+/*#region*/
+/* --- Work Showcase Box --- */
 .workBox {
-    z-index: 400;
+    z-index: 10;
     height: 100%;
     width: 80%;
     position: relative;
@@ -38,19 +53,54 @@
     
     cursor: pointer;
 }
-.workBoxBack {
-    position: absolute;
-    z-index: 500;
-    top: 55px;
-    left: calc(50% - 27px);
-    width: 50px;
-    height: 50px;
-
-    transition: opacity 0.6s ease-in;
-    border: 2px dashed #292828;
+/* --- Work Showcase pictures --- */
+.workPic1 {
+    background-image: url(../img/w10.jpg);     
 }
+.workPic2 {
+    background-image: url(../img/w20.jpg); 
+}
+.workPic3 {
+    background-image: url(../img/w30.jpg); 
+}
+.workPic4 {
+    background-image: url(../img/w40.jpg); 
+}
+.workPic5 {
+    background-image: url(../img/w40.jpg); 
+}
+/* --- Work Description ---*/
+.workDesc {
+    text-align: center;
+    text-decoration: none;
+    color: #EDEDED;
+    font-size: 50px;
+    
+    display: block;
+    background-color: rgba(41, 40, 40, 0.5);
+    transition: all 1.5s ease, padding 1ms, opacity 0.25s; 
+}
+.workDescDeco{
+    padding: 5% 20% 5% 20%;
+}
+.workDesc p {
+    display: none;
+}
+/* --- Work Showcase Grey filter --- */
+.greyFilter {    
+    filter: grayscale(80%);
+    -webkit-filter: grayscale(80%);
+    transition: all 0.8s ease, background 1ms;
+    -webkit-transition: all  0.8s ease, background 1ms;   
+}
+.removeGreyFilter {
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+}
+/*#endregion*/
 
-/* --- Animations work showcase change --- */
+/* --- Animations work-showcase change work --- */
+/*#region*/
 .workNextA{
     -webkit-animation: aniNextWA 0.6s forwards;
     animation: aniNextWA 0.6s forwards;
@@ -117,54 +167,12 @@
         75% {top: -1%;}
         100% {top: 0%;}
     }
+/*#endregion*/
 
-/* --- Work pictures --- */
-.workPic1 {
-    background-image: url(../img/w10.jpg);     
-}
-.workPic2 {
-    background-image: url(../img/w20.jpg); 
-}
-.workPic3 {
-    background-image: url(../img/w30.jpg); 
-}
-.workPic4 {
-    background-image: url(../img/w40.jpg); 
-}
-.workPic5 {
-    background-image: url(../img/w40.jpg); 
-}
-/* --- Work small descriptions ---*/
-.workDesc {
-    text-align: center;
-    text-decoration: none;
-    color: #EDEDED;
-    font-size: 50px;
-    
-    display: block;
-    background-color: rgba(41, 40, 40, 0.5);
-    transition: all 1.5s ease, padding 1ms, opacity 0.25s; 
-}
-.workDescDeco{
-    padding: 5% 20% 5% 20%;
-}
-.workDesc p {
-    display: none;
-}
-/* --- grey filter --- */
-.greyFilter {    
-    filter: grayscale(80%);
-    -webkit-filter: grayscale(80%);
-    transition: all 0.8s ease, background 1ms;
-    -webkit-transition: all  0.8s ease, background 1ms;   
-}
-.removeGreyFilter {
-    filter: grayscale(0%);
-    -webkit-filter: grayscale(0%);
-}
-/* --- workframes shortcut bar --- */
+/* --- Work Showcase shortcut bar --- */
+/*#region*/
 .workShortcutSide {
-    z-index: 600;
+    z-index: 10;
     width: 7%;
     height: 100%;
     margin-left: 0%;
@@ -179,7 +187,7 @@
     display: none;
     margin-top: 50px;
 }
-/* --- workframes shortcut bar animations --- */
+/* ---  Work Showcase shortcut bar animations --- */
 .workShortcutSideSwooshIn {
     -webkit-animation: aniSwooshInWSB 0.8s forwards;
     animation: aniSwooshInWSB 0.8s forwards;
@@ -204,7 +212,7 @@
         0% {left: 0%;}
         100% {left: -10%;}
     }
-/* --- workframes shortcut buttons --- */
+/* ---  Work Showcase shortcut bar buttons --- */
 .workShortcutButton {
     width: 100%;
     height: 40px;
@@ -236,7 +244,7 @@
 .workShortcutButtonActive {
     background-color: #292828;
 }
-/* --- workframes shortcut buttons animation --- */
+/* ---  Work Showcase shortcut bar buttons animation --- */
 .workShortcutButtonDesignLoad {
     -webkit-animation: aniLoadWSB 1s forwards;
     animation: aniLoadWSB 1s forwards;
@@ -249,7 +257,11 @@
         0% {left: -100%;}
         100% {left: 0%;}
     }
-/* --- workframes open/close large desc animations --- */
+/*#endregion*/
+
+/* ---  Animations open/close Work Showcase --- */
+/*#region*/
+/* --- Work Showcase open/close Images --- */
 .workOpenLargeDesc {
     -webkit-animation: aniOpenLD 0.8s forwards;
     animation: aniOpenLD 0.8s forwards;
@@ -278,8 +290,7 @@
         30% {top: -30%; width: 80%;}
         100% {top: -130%; width: 80%;}
     }
-
-/* --- workframes open/close large desc --- */
+/* --- Work Showcase open/close detailed description --- */
 .workContentLargeDesc { 
     display: flex;
     justify-content: center;
@@ -300,8 +311,9 @@
 .workContentLargeDesc .workDesc {
     opacity: 0;
 }
+/* --- Work Showcase return to Showcase menu button --- */
 .workContentLargeReturnButton {
-    z-index: 600;
+    z-index: 21;
     position: fixed;
     top: 0%;
     left: 2%;
@@ -336,11 +348,12 @@
         0% {top: 0%;}
         100% {top: -100%;}
     }
+/*#endregion*/
 
 /* --- work large desc --- */
 .workDescBig { 
     position: absolute;
-    z-index: 900;
+    z-index: 20;
     
     height: 75%;
     width: 100%;
@@ -375,9 +388,6 @@
         100% {top: 100%;}
     }
 
-.workDescBig section {
-}
-
 .workDescBigBlackInfo {
     width: 100%;
     height: 30vh;
@@ -394,8 +404,6 @@
     text-shadow: -1px 0 #292828, 0 1px #292828, 1px 0 #292828, 0 -1px #292828;
 }
 
-.workDescBigMainContainer {
-}
 .workDescBigPanel {
     height: 100vh;
 
@@ -422,7 +430,6 @@
     margin-left: 0vw;
     height: 10vh;
     width: 60vw;
-    z-index: 1250;
 
     border: 2px solid #292828;
     background-color: #757575;

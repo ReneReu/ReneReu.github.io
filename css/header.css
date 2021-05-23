@@ -1,6 +1,6 @@
 /* --- Header --- */
 header {
-    z-index: 800;
+    z-index: 50;
 	width: 100%;
 	height: 150px;
 	background-color: #292828;
@@ -8,7 +8,7 @@ header {
     max-width: none;
 }
 
-/* --- Header Top --- */
+/* --- Header Top Bar --- */
 .headTop {
     height: 100px;
 	background-color: #363534;   
@@ -47,7 +47,8 @@ header {
 .logoName:hover {
     color: white;
 }
-.logoName:hover h1:nth-child(2) {  
+.logoName:hover h1:nth-child(2),
+.logoName:hover h1:nth-child(4) {  
     color: #E08970;
 }
 
@@ -114,7 +115,7 @@ header {
 }
 
 
-/* --- Header Bot --- */
+/* --- Header Bot Bar --- */
 .headBot {
 	width: 100%;
 	height: 50px;

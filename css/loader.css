@@ -1,5 +1,5 @@
 .loadingscrn {
-    z-index: 1000;
+    z-index: 100;
     position: absolute;
     overflow: hidden;
     
@@ -8,7 +8,7 @@
 }
 
 .loadingscrnAnim {
-    z-index: 1050;
+    z-index: 101;
     position: absolute;
     display: flex;
     justify-content: center;
@@ -120,7 +120,6 @@
     border-top: 1px solid transparent;
 }
 
-.loadedAnimation {}
 .loadedAnimation .loadingCircles {
 	-webkit-animation: loadingCircleFade 0.8s 0.2s forwards;
 	animation: loadingCircleFade 0.8s 0.2s forwards;
