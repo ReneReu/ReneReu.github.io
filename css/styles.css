@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url(../fonts/Roboto/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: 'Comfortaa';
+    src: url(../fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf);
+}
+
 body {
     background: black;
     width: 99%;
@@ -25,9 +34,13 @@ a {
 .opacityNone {
     opacity: 0;
 }
-.snap{
+.snap {
     scroll-snap-align: end;
 }
+.snappable {
+    scroll-snap-type: block proximity;
+}
+
 
 .switchButtonIcon p:nth-child(1){
     display: block; 

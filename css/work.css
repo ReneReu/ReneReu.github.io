@@ -268,12 +268,12 @@
 }
     @-webkit-keyframes aniOpenLD {
         0% {top: 0%; width: 80%;}
-        70% {top: -30%; width: 80%;}
+        50% {top: -30%; width: 80%;}
         100% {top: -30%; width: 100%;}
     }
     @keyframes aniOpenLD {
         0% {top: 0%; width: 80%;}
-        70% {top: -30%; width: 80%;}
+        40% {top: -30%; width: 80%;}
         100% {top: -30%; width: 100%;}
     }
 .workCloseLargeDesc {
@@ -296,8 +296,6 @@
     justify-content: center;
     align-items: center; 
     overflow-y: scroll;
-
-    scroll-snap-type: block proximity;
     height: 100vh;
 }
 .workContentLargeDesc .workShortcutSide {

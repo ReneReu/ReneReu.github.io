@@ -350,8 +350,9 @@ function mainFunction() {
         $(".workContentLargeReturnButton").click(function() {
             if (expandedWork === true) {
                 
-                $(".workContentLargeDesc").animate({ scrollTop: 0 }, 1000);
-
+                $(".workContentLargeDesc").removeClass("snappable")
+                $(".workContentLargeDesc").animate({scrollTop: 0}, 1000);
+                
                 setTimeout(function(){
                     closeExpandWork(); 
                 }, 1000); 
@@ -379,6 +380,7 @@ function mainFunction() {
                 $(".workDescBig"+workNumber).removeClass("displayNone");
 
                 $(".workDesc p").addClass("displayNone");
+                $(".workContentLargeDesc").addClass("snappable")
 
                 expandedWork = true;
             }, 1400);            
