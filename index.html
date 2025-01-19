@@ -4,285 +4,217 @@
 <head>
 	<title>Rene Reufels - Portfolio</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=0.55, minimum-scale=0.1, maximum-scale=1.0, user-scalable=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=5, user-scalable=yes"/>
     <meta name="description" content="Webdesign | Photography | Art | Machine Learning"/>
     
-	<link href="css/pre/reset.css" type="text/css" media="screen" rel="stylesheet">
-	<link href="css/styles.css" type="text/css" media="screen" rel="stylesheet">
+	<link href="css/lib/reset.css" media="screen" rel="stylesheet">
+	<link href="css/styles.css" media="screen" rel="stylesheet">
     
-    <link href="css/loading.css" type="text/css" media="screen" rel="stylesheet">
-    <link href="css/header.css" type="text/css" media="screen" rel="stylesheet">
-    <link href="css/footer.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="css/loading.css"  media="screen" rel="stylesheet">
+    <link href="css/header.css" media="screen" rel="stylesheet">
     
-    <link href="css/content.css" type="text/css" media="screen" rel="stylesheet">
-    <link href="css/work.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="css/content.css" media="screen" rel="stylesheet">
+    <link href="css/work.css" media="screen" rel="stylesheet">
     
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/lib/jquery-3.7.1.min.js"></script>
 
-    <script type="text/javascript" language="javascript" src="js/main.js"></script>
-    
-	<script src="js/modernizr.js"></script>
-	<script src="js/respond.min.js"></script>
+    <script src="js/main.js" type="module"></script>
+    <script src="js/work.js" type="module"></script>
+
+    <link rel="preload" as="image" href="img/logo.svg">
+     <!--
+    <script src="js/centerpiece.js" type="module" defer></script>
+    <link rel="preload" href="fonts/Roboto/roboto-v30-latin-regular.woff2" as="font" type="font/woff2">
+    <link rel="preload" href="fonts/Comfortaa/comfortaa-v45-latin-regular.woff2" as="font" type="font/woff2">
+     -->
 </head>
 
 <body>
-    
-    <div class="loadingscrn">
-        <div class="loadingscrnAnim">
-            <h1 class>L O A D I N G</h1>
+    <!-- Loading screen plays until all resources are loaded in-->
+    <div class="loadingScreen">
+        <div class="loadingAnimation">
+            <p>L O A D I N G</p>
             <div class="loadingCircles">
-                <div class="loaderC1"></div>
-                <div class="loaderC2"></div>
-                <div class="loaderC3"></div>
+                <div class="loadingCircle1"></div>
+                <div class="loadingCircle2"></div>
+                <div class="loadingCircle3"></div>
             </div>
         </div>
-        <div class="loadingscrnTop"></div>
-        <div class="loadingscrnMid"></div>
-        <div class="loadingscrnBot"></div>   
-        
-        <div class="mediaPreloadingSpace">
-            <img src="img/w11.jpg">
-        </div> 
-    
+        <div class="loadingScreenTop"></div>
+        <div class="loadingScreenMid"></div>
+        <div class="loadingScreenBot"></div>       
     </div>
-    
-	<header>
-        <div class="headTop">
+
+    <!-- Header -->
+	<header class="header">
+        <div class="headerTop">
             <div class="logo">
-                <div class="logoImg">
-                    <a href="index.html">
-                        <img src="img/logo.jpg">
-                    </a>         
-                </div>
+                <a href="index.html" title="Portfolio">
+                    <img class="logoImg" src="img/logo.svg" alt="logo">
+                </a>         
                 <a class="logoName" href="index.html">
-                    <h1>R</h1>
-                    <h1>e</h1>
-                    <h1>ne R</h1>  
-                    <h1>e</h1>
-                    <h1>ufels</h1>
+                    <h1>RenReu</h1> 
                 </a>
             </div>
-            
-            <p class="slogan">S L O G A N</p>
+            <p class="slogan">. . . . .</p>
         </div>
-        
-        <div class="headBot">           
-            <nav class="menu">
-                <ul>
-                    <li class="mobileMenuButton"><span class="menuButton switchButtonIcon expandMenu">
-                        <p>☰</p>
-                        <p>✕</p>
-                    </span></li>                     
-                    <li><a class="menuButton">
-                        <p>_</p>
-                    </a></li> 
-                    <li><a class="menuButton">
-                        Contact
-                    </a></li>
-                    <li><div class="menuButton">
-                        Art
-                    </div></li>
-                    <li><div class="menuButton">
-                        Work
-                    </div></li>
-                    <li><div class="menuButton activeMenu">
-                        Start
-                    </div></li>                 
-                </ul>      
-            </nav>            
-        </div>
+        <nav class="headerBot">           
+            <ul class="menu">   
+                <li class="mobileMenuButton"><span class="menuButton switchButtonIcon expandMenu">
+                    <p>☰</p>
+                    <p>✕</p>
+                </span></li>
+                <li><div class="menuButton">.</div></li>  
+                <li><div class="menuButton menuButtonActive">Start</div></li>
+                <li><div class="menuButton">Work</div></li>
+                <li><div class="menuButton">Art</div></li>
+                <li><a href="thing.html"><div class="menuButton">Contact</div></a></li>
+                
+            </ul>      
+        </nav>   
     </header>
     
-    <div class="content">
-        
-        <div class="startContent">
-            <div class="centerPiece">
-                <div class="eyeCatcher">
-                
-                    <div class="eyeCatcherTop"></div>
-                    <div class="eyeCatcherBottom"></div>
-                        
-                    <div class="thingy"></div>
-                </div>
-            </div>
-            
-            <div class="startToWork">
-                <!--div class="picPreviewSlash ppp"></div>
-                <div class="picPreviewSlash ppp"></div>
-                <div class="picPreviewSlash ppp"></div>
-                <div class="picPreviewSlash ppp"></div-->
+    <main class="content">
+        <!-- content of the landing page -->
+        <section class="startContent">
+            <!-- centerPiece containing the three.js scene -->
+            <div class="centerPiece"></div>
+
+            <div class="startToShowcase">
                 <h2>WORK</h2>
             </div>
-            
-            <div class="socialBar">
-                <h2>SOCIAL</h2>
-                <a class="socialIcon" href="https://linkedin.com/" data-name="LinkedIn"></a>
-                <a class="socialIcon" href="https://github.com/IReRe" data-name="GitHub"></a>
-                <a class="socialIcon" href="" data-name="a"></a>
-            </div>
-        </div>
+        </section>
         
-        <div class="workContent">   
+        <section class="showcaseContent displayNone">   
             <!--------------- Selection of Work --------------->
 
-            <div class="workShortcutSide">
-                <div class="workShortcutBar">
-                    <!--ed-->
-                    <div class="workShortcutButton">
-                        <div class="workShortcutButtonDesign workShortcutButtonActive"></div>
+            <nav class="showcaseSidebar">
+                <div class="showcaseSidebarNavigation">
+                    <div class="showcaseSidebarButton">
+                        <div class="showcaseSidebarButtonDesign showcaseSidebarButtonActive"></div>
                     </div>
-                    <div class="workShortcutButton">
-                        <div class="workShortcutButtonDesign"></div>
+                    <div class="showcaseSidebarButton">
+                        <div class="showcaseSidebarButtonDesign"></div>
                     </div>
-                    <div class="workShortcutButton">
-                        <div class="workShortcutButtonDesign"></div>
+                    <div class="showcaseSidebarButton">
+                        <div class="showcaseSidebarButtonDesign"></div>
                     </div>
-                    <div class="workShortcutButton">
-                        <div class="workShortcutButtonDesign"></div>
+                    <div class="showcaseSidebarButton">
+                        <div class="showcaseSidebarButtonDesign"></div>
                     </div>
-                    <div class="workShortcutButton">
-                        <div class="workShortcutButtonDesign"></div>
+                    <div class="showcaseSidebarButton">
+                        <div class="showcaseSidebarButtonDesign"></div>
                     </div>
-                </div>
-            </div>
+                </div>                
+            </nav>
+            <button class="showcaseBackToStartButton opacityNone" aria-label="Back to Start"></button>
 
-            <div class="workBox"> 
+            <div class="showcaseBox">
+                <div class="showcaseFrame"
+                    data-pic0="url('../img/w10.avif')" data-desc0="bla"
+                    data-pic1="url('../img/w20.avif')" data-desc1="blabla"
+                    data-pic2="url('../img/w30.avif')" data-desc2="blablabla"
+                    data-pic3="url('../img/w40.avif')" data-desc3="blablablabla"
+                    data-pic4="url('../img/w40.avif')" data-desc4="blablablablabla">
 
-                <div class="workFrame workPic0 greyFilter">  
-                    <!--ed-->
-                    <ul class="workDesc">
-                        <p>Work 1</p>
-                        <p>Work 2</p>
-                        <p>Work 3</p>
-                        <p>Work 4</p>
-                        <p>Work 5</p>
+                    <ul class="showcaseTitle">
+                        <li>Work 1</li>
+                        <li>Work 2</li>
+                        <li>Work 3</li>
+                        <li>Work 4</li>
+                        <li>Work 5</li>
                     </ul>                
                 </div>            
+            </div>            
 
-            </div>
+            <section class="projectBox displayNone">
 
-            <div class="workBackButton opacityNone"></div>
+                <button class="projectReturnButton displayNone" aria-label="Back to Showcase menu"></button>
 
-            <div class="workDescBig displayNone">
-
-                <div class="workContentLargeReturnButton displayNone"></div>
-                <!--ed-->
-                <section class="workDescBig1 displayNone">
+                <article id="project0" class="displayNone">
                     
-                    <div class="workDescBigBlackInfo">
+                    <header class="projectBoxInfo">
                         <p>Location: Siem Reap, Kambodia</p>
-                    </div>
+                    </header>
                   
-                    <div class="workDescBigMainContainer">
+                    <div class="projectBoxPanelContainer">
 
-                        <div class="workDescBigPanel snap">
-                            <img src="img/w11.jpg" class="imgCoverDiv">
-                        </div>
+                        <figure class="projectBoxPanel">
+                            <img class="imgCoverDiv" src="img/w11.avif" alt="Image of Siem Reap">
+                        </figure>
 
-                        <div class="workDescBigPanel snap">
+                        <figure class="projectBoxPanel">
                             <video autoplay muted loop preload="auto">
                                 <source src="img/test.mp4" type="video/mp4">
                                 HTML5 Video not supported by Browser
-                            </video>
-                            <div class=workDescBigPanelTextbox>
-                                <p>cool view</p>
-                            </div>
-                        </div>
+                            </video>                            
+                            <figcaption>cool view</figcaption>                            
+                        </figure>
 
-                        <div class="workDescBigPanel snap W1Img2">
-                            <img src="img/w12.jpg">
-                        </div>
+                        <figure class="projectBoxPanel">
+                            <img src="img/w12.avif" alt="Image of Siem Reap">
+                        </figure>
 
-                        <div class="workDescBigPanel snap"></div>
+                        <figure class="projectBoxPanel"></figure>
 
-                        <div class="workDescBigPanel snap W1Img3">
-                            <img src="img/w13.jpg">
-                        </div>
+                        <figure class="projectBoxPanel">
+                            <img src="img/w13.avif" alt="Image of Siem Reap">
+                        </figure>
 
-                        <div class="workDescBigPanel snap W1Img4">
-                            <img src="img/w14.jpg">
-                        </div>
+                        <div class="projectBoxPanelEnd"></div>
 
-                        <div class="workDescBigPanelEnd snap"></div>
+                    </div>                    
+                </article>
 
-                    </div>
-                    
-                </section>
-
-                <section class="workDescBig2 displayNone">
-                    <div class="workDescBigBlackInfo">
+                <article id="project1" class="displayNone">
+                    <header class="projectBoxInfo">
                         <p>Location: Cloud City</p>
+                    </header>
+                    <div class="projectBoxPanelContainer">
+                        <figure class="projectBoxPanel"></figure>
                     </div>
-                    <div class="workDescBigMainContainer">
-                        <div class="workDescBigPanel snap W1Img1">
-                        </div>
-                    </div>
-                </section>
+                </article>
 
-                <section class="workDescBig3 displayNone">
-                    <div class="workDescBigBlackInfo">
+                <article id="project2" class="displayNone">
+                    <header class="projectBoxInfo">
                         <p>Location: Siem Reap, Kambodia</p>
-                    </div>
-                    <div class="workDescBigMainContainer"></div>
-                </section>
+                    </header>
+                    <div class="projectBoxPanelContainer"></div>
+                </article>
 
-                <section class="workDescBig4 displayNone">
-                    <div class="workDescBigBlackInfo">
+                <article id="project3" class="displayNone">
+                    <header class="projectBoxInfo">
                         <p>Location: Siem Reap, Kambodia</p>
-                    </div>
-                    <div class="workDescBigMainContainer"></div>
-                </section>
+                    </header>
+                    <div class="projectBoxPanelContainer"></div>
+                </article>
 
-                <section class="workDescBig5 displayNone">
-                    <div class="workDescBigBlackInfo">    
+                <article id="project4" class="displayNone">
+                    <header class="projectBoxInfo">    
                         <p>Location: Siem Reap, Kambodia</p>
                         <a href="thing.html">Web-App</a>
-                    </div>
-                    <div class="workDescBigMainContainer"></div>
-                </section>
-
-            </div>
-        </div>
-        
-    </div>
-    
+                    </header>
+                    <div class="projectBoxPanelContainer"></div>
+                </article>
+            </section>        
+    </main>
     
     <script>
-        $(document).ready(function() {
-            preloading();
-            mainFunction();
-        });
-        
-        var xLoadingTime = 300;
-        
-        function preloading() {
-            setTimeout(function() {
-                $(".loadingscrn").addClass("loadedAnimation");
-            }, xLoadingTime);  
-            setTimeout(function() {
-                $(".loadingscrn").css({"display":"none"});
-            }, 1700 + xLoadingTime);  
-        }
-        
-        $(document).bind("mousemove", function(e){
-            setTimeout(function(){  
-                $(".thingy").css({
-                    "top":  ((e.pageY / $(document).height() * 400) -53), 
-                    "left": ((e.pageX / $(document).width() * 400) -23) 
-                });
-            }, 400);
-        });
-        $(document).on("touchstart", function(e){
-            setTimeout(function(){  
-                $(".thingy").css({
-                    "top":  ((e.pageY / $(document).height() * 400) -53), 
-                    "left": ((e.pageX / $(document).width() * 400) -23) 
-                });
-            }, 400);
-        });
+        $(window).on("load", loaded);
 
+        /* --- loading completed --- */       
+        function loaded() {
+            const loadingTime = 1000;             
+            setTimeout(function(){
+                $(".loadingScreen").addClass("loadedAnimation");   
+                $(".loadingScreen").on("animationend", function() {
+                    setTimeout(function() {
+                        $(".loadingScreen").css("will-change", "auto");
+                        $(".loadingScreen").hide();
+                    }, loadingTime);
+                });    
+            }, loadingTime);            
+        }
     </script>
-    
 </body>    
-    
 </html>

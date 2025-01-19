@@ -1,439 +1,334 @@
-/* --- content adjustments --- */
-.workContent {
-    height: 100%;
+/*CSS for the work section of the website. This includes the 
+Showcase section, where you can select the different examples
+as well as their expanded sites, where you can see the project
+in detail */
+
+/* --- content adjustments showcase zone--- */
+.showcaseContent {
     width: 100%;
-    position: absolute;
-    display: none;
+    display: flex;
+    flex-grow: 1;
 }
-/* --- Work Menu--- */
-.workBackButton {
+/* --- showcase zone--- */
+.showcaseBackToStartButton {
     position: absolute;
     z-index: 11;
     top: 55px;
     left: calc(50% - 27px);
     width: 50px;
     height: 50px;
-
-    transition: opacity 0.6s ease-in;
-    border: 2px dashed #292828;
+    border: 2px dashed var(--color-dark2);
+    transition: opacity 0.6s ease-in;    
 }
 
-/* --- Work Showcase picture and description --- */
+/* --- work showcase frame with picture and description --- */
 /*#region*/
-/* --- Work Showcase Box --- */
-.workBox {
-    z-index: 10;
+/* --- showcase Box --- */
+.showcaseBox {
     height: 100%;
     width: 80%;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center; 
+    overflow: hidden;
 }
-.workFrame {
-    -webkit-background-size: cover;
-    background-size: cover;
-    
-    background-attachment: fixed;  
-    background-position: center center; 
-    background-repeat: no-repeat;
-
+/* --- showcase frame for individual pic and description --- */
+.showcaseFrame {
     height: 80%;
     width: 100%;
-    margin-left: 0%;
-    margin-right: 0%;
-    margin-top: calc(5% + 50px);
-    margin-bottom: 5%;
-    position: static;
-    overflow: hidden;
-    
-    display: flex;
+    display: flex;   
+    background: center center / cover no-repeat fixed;
+    transition: background-image 0.2 ease;
+    filter: grayscale(80%);
+    transition: filter 0.8s ease;
     justify-content: center;
-    align-items: center; 
-    
+    align-items: center;
     cursor: pointer;
 }
-/* --- Work Showcase pictures --- */
-.workPic1 {
-    background-image: url(../img/w10.jpg);     
-}
-.workPic2 {
-    background-image: url(../img/w20.jpg); 
-}
-.workPic3 {
-    background-image: url(../img/w30.jpg); 
-}
-.workPic4 {
-    background-image: url(../img/w40.jpg); 
-}
-.workPic5 {
-    background-image: url(../img/w40.jpg); 
-}
-/* --- Work Description ---*/
-.workDesc {
+/* --- showcase title ---*/
+.showcaseTitle {
     text-align: center;
     text-decoration: none;
-    color: #EDEDED;
-    font-size: 50px;
-    
+    color: var(--color-primary);
+    font-size: 50px;    
     display: block;
     background-color: rgba(41, 40, 40, 0.5);
     transition: all 1.5s ease, padding 1ms, opacity 0.25s; 
 }
-.workDescDeco{
+/*padding separated to prevent flickering animation */
+.showcaseTitleDeco {
     padding: 5% 20% 5% 20%;
 }
-.workDesc p {
+.showcaseTitle li {
     display: none;
 }
 /* --- Work Showcase Grey filter --- */
-.greyFilter {    
-    filter: grayscale(80%);
-    -webkit-filter: grayscale(80%);
-    transition: all 0.8s ease, background 1ms;
-    -webkit-transition: all  0.8s ease, background 1ms;   
-}
-.removeGreyFilter {
+.showcaseGreyFilterRemove {
     filter: grayscale(0%);
-    -webkit-filter: grayscale(0%);
 }
 /*#endregion*/
 
-/* --- Animations work-showcase change work --- */
+/* --- Animations showcase change frames--- */
 /*#region*/
-.workNextA{
-    -webkit-animation: aniNextWA 0.6s forwards;
-    animation: aniNextWA 0.6s forwards;
+.showcaseNextA{
+    animation: animNextSCFrameA 0.6s forwards;
 }
-    @-webkit-keyframes aniNextWA {
-        0% {top: 0%;}
-        100% {top: -100%;}
-    }
-    @keyframes aniNextWA {
-        0% {top: 0%;}
-        100% {top: -100%;}
-    }
-.workNextB{
-    -webkit-animation: aniNextWB 0.6s forwards;
-    animation: aniNextWB 0.6s forwards;
+@keyframes animNextSCFrameA {
+    0% {top: 0%;}
+    100% {top: -100%;}
 }
-    @-webkit-keyframes aniNextWB {
-        0% {top: 100%;}
-        100% {top: 0%;}
-    }
-    @keyframes aniNextWB {
-        0% {top: 100%;}
-        100% {top: 0%;}
-    }
-.workPrevA{
-    -webkit-animation: aniPrevWA 0.6s forwards;
-    animation: aniPrevWA 0.6s forwards;
+@keyframes animNextSCFrameAx {
+    0% {transform: translateY(0%);}
+    100% {transform: translateY(-100%);}
 }
-    @-webkit-keyframes aniPrevWA {
-        0% {top: 0%;}
-        100% {top: 100%;}
-    }
-    @keyframes aniPrevWA {
-        0% {top: 0%;}
-        100% {top: 100%;}
-    }
-.workPrevB{
-    -webkit-animation: aniPrevWB 0.6s forwards;
-    animation: aniPrevWB 0.6s forwards;
+.showcaseNextB{
+    animation: animNextSCFrameB 0.6s forwards;
 }
-    @-webkit-keyframes aniPrevWB {
-        0% {top: -100%;}
-        100% {top: 0%;}
-    }
-    @keyframes aniPrevWB {
-        0% {top: -100%;}
-        100% {top: 0%;}
-    }
-.workShake{
-    -webkit-animation: aniShakeW 0.6s forwards;
-    animation: aniShakeW 0.6s forwards;
+@keyframes animNextSCFrameB {
+    0% {top: 100%;}
+    100% {top: 0%;}
 }
-    @-webkit-keyframes aniShakeW {
-        0% {top: 0%;}
-        25% {top: 1%;}
-        50% {}
-        75% {top: -1%;}
-        100% {top: 0%;}
-    }
-    @keyframes aniShakeW {
-        0% {top: 0%;}
-        25% {top: 1%;}
-        50% {}
-        75% {top: -1%;}
-        100% {top: 0%;}
-    }
+@keyframes animNextSCFrameBx {
+    0% {transform: translateY(100%);}
+    100% {transform: translateY(0%);}
+}
+.showcasePrevA{
+    animation: animPrevSCFrameA 0.6s forwards;
+}
+@keyframes animPrevSCFrameA {
+    0% {top: 0%;}
+    100% {top: 100%;}
+}
+.showcasePrevB{
+    animation: animPrevSCFrameB 0.6s forwards;
+}
+@keyframes animPrevSCFrameB {
+    0% {top: -100%;}
+    100% {top: 0%;}
+}
+.showcaseShake{
+    animation: animEndSCFrame 0.6s forwards;
+}
+@keyframes animEndSCFrame {
+    0% {top: 0%;}
+    25% {top: 1%;}
+    50% {}
+    75% {top: -1%;}
+    100% {top: 0%;}
+}
 /*#endregion*/
 
-/* --- Work Showcase shortcut bar --- */
+/* --- Showcase shortcut navigation sidebar --- */
 /*#region*/
-.workShortcutSide {
+.showcaseSidebar {
     z-index: 10;
     width: 7%;
     height: 100%;
     margin-left: 0%;
-    margin-right: 3%;
-    
+    margin-right: 3%;    
     position: relative;
     display: flex;
     align-items: center; 
 }
-.workShortcutBar {
-    width: 100%;
+.showcaseSidebarNavigation {
     display: none;
+    width: 100%;    
     margin-top: 50px;
 }
-/* ---  Work Showcase shortcut bar animations --- */
-.workShortcutSideSwooshIn {
-    -webkit-animation: aniSwooshInWSB 0.8s forwards;
-    animation: aniSwooshInWSB 0.8s forwards;
+/* ---  Showcase shortcut sidebar animations --- */
+.showcaseSidebarIn {
+    animation: animSCSidebarIn 0.8s forwards;
 }
-    @-webkit-keyframes aniSwooshInWSB {
-        0% {left: -100%;}
-        100% {left: 0%;}
-    }
-    @keyframes aniSwooshInWSB {
-        0% {left: -100%;}
-        100% {left: 0%;}
-    }
-.workShortcutSideSwooshOut {
-    -webkit-animation: aniSwooshOutWSB 0.8s forwards;
-    animation: aniSwooshOutWSB 0.8s forwards;
+@keyframes animSCSidebarIn {
+    0% {left: -100%;}
+    100% {left: 0%;}
 }
-    @-webkit-keyframes aniSwooshOutWSB {
-        0% {left: 0%;}
-        100% {left: -10%;}
-    }
-    @keyframes aniSwooshOutWSB {
-        0% {left: 0%;}
-        100% {left: -10%;}
-    }
-/* ---  Work Showcase shortcut bar buttons --- */
-.workShortcutButton {
+.showcaseSidebarOut {
+    animation: animSCSidebarOut 0.8s forwards;
+}
+@keyframes animSCSidebarOut {
+    0% {left: 0%;}
+    100% {left: -10%;}
+}
+/* ---  Showcase shortcut sidebar buttons --- */
+.showcaseSidebarButton {
     width: 100%;
     height: 40px;
-    border-top: 4px solid #292828;
-    cursor: pointer;
-    
+    border-top: var(--border-style4);
+    cursor: pointer;    
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center; 
     float: left;
 }
-.workShortcutButton:last-child {
-    border-bottom: 4px solid #292828;
+.showcaseSidebarButton:last-child {
+    border-bottom: var(--border-style4);
 }
-.workShortcutButtonDesign {
+.showcaseSidebarButtonDesign {
     background-color: rgba(0, 0, 0, 0);
-    border-top: 2px solid #292828;
-    border-bottom: 2px solid #292828;
-    border-right: 2px solid #292828;
+    border: var(--border-style2);
+    border-left: none;  
     width: 90%;
     height: 80%;
     padding-right: 10%;
     position: relative;
     display: none;
-    transition: all 0.5s ease;
-    -webkit-transition: all 0.5s ease;
+    left: -100%;
 }
-.workShortcutButtonActive {
-    background-color: #292828;
+.showcaseSidebarButtonActive {
+    background-color: var(--color-dark2);
 }
-/* ---  Work Showcase shortcut bar buttons animation --- */
-.workShortcutButtonDesignLoad {
-    -webkit-animation: aniLoadWSB 1s forwards;
-    animation: aniLoadWSB 1s forwards;
+/* ---  Showcase shortcut sidebar button animations --- */
+.showcaseSidebarButtonDesignLoad {
+    animation: animSCSidebarButtonLoad 0.8s forwards;
 }
-    @-webkit-keyframes aniLoadWSB {
-        0% {left: -100%;}
-        100% {left: 0%;}
-    }
-    @keyframes aniLoadWSB {
-        0% {left: -100%;}
-        100% {left: 0%;}
-    }
+@keyframes animSCSidebarButtonLoad {
+    0% {left: -100%;}
+    100% {left: 0%;}
+}
 /*#endregion*/
 
-/* ---  Animations open/close Work Showcase --- */
+/* ---  open/close detailed project view from showcase frame --- */
 /*#region*/
-/* --- Work Showcase open/close Images --- */
-.workOpenLargeDesc {
-    -webkit-animation: aniOpenLD 0.8s forwards;
-    animation: aniOpenLD 0.8s forwards;
+/* --- Animations open/close project view from showcase frame --- */
+.projectOpening {
+    animation: animPrViOpen 0.8s forwards;
 }
-    @-webkit-keyframes aniOpenLD {
-        0% {top: 0%; width: 80%;}
-        50% {top: -30%; width: 80%;}
-        100% {top: -30%; width: 100%;}
-    }
-    @keyframes aniOpenLD {
-        0% {top: 0%; width: 80%;}
-        40% {top: -30%; width: 80%;}
-        100% {top: -30%; width: 100%;}
-    }
-.workCloseLargeDesc {
-    -webkit-animation: aniCloseLD 0.8s forwards;
-    animation: aniCloseLD 0.8s forwards;
+@keyframes animPrViOpen {
+    0% {top: 0%; width: 80%;}
+    40% {top: -30%; width: 80%;}
+    100% {top: -30%; width: 100%;}
 }
-    @-webkit-keyframes aniCloseLD {
-        0% {top: -30%; width: 100%;}
-        30% {top: -30%; width: 80%;}
-        100% {top: -130%; width: 80%;}
-    }
-    @keyframes aniCloseLD {
-        0% {top: -30%; width: 100%;}
-        30% {top: -30%; width: 80%;}
-        100% {top: -130%; width: 80%;}
-    }
-/* --- Work Showcase open/close detailed description --- */
-.workContentLargeDesc { 
+.projectClosing {
+    animation: animPrViClose 0.8s forwards;
+}
+@keyframes animPrViClose {
+    0% {top: -30%; width: 100%;}
+    30% {top: -30%; width: 80%;}
+    100% {top: -130%; width: 80%;}
+}
+/* --- project view --- hide classes from showcase view --- */
+.projectView { 
     display: flex;
     justify-content: center;
     align-items: center; 
     overflow-y: scroll;
     height: 100vh;
 }
-.workContentLargeDesc .workShortcutSide {
+.projectView .showcaseSidebar {
     display: none;
 }
-.workContentLargeDesc .workFrame {
+.projectView .showcaseFrame {
     padding-top: 15%;
     padding-bottom: 15%;
     cursor: default;
 }
-.workContentLargeDesc .workDesc {
+.projectView .showcaseTitle {
     opacity: 0;
 }
-/* --- Work Showcase return to Showcase menu button --- */
-.workContentLargeReturnButton {
+/* --- return from project to showcase view button + animation --- */
+.projectReturnButton {
     z-index: 21;
     position: fixed;
     top: 0%;
-    left: 2%;
-    
+    left: 2%;    
     height: 50px;
     width: 50px;
-    background-color: rgba(41, 40, 40, 0.5);
-    
+    background-color: rgba(41, 40, 40, 0.5);    
     cursor: pointer;
 }
-.workContentLargeReturnButtonSwooshIn {
-    -webkit-animation: aniSwooshInWCLRB 0.8s forwards;
-    animation: aniSwooshInWCLRB 0.8s forwards;
+.projectReturnButtonIn {
+    animation: animPrViReturnButtonIn 0.8s forwards;
 }
-    @-webkit-keyframes aniSwooshInWCLRB {
-        0% {top: -100%;}
-        100% {top: 0%;}
-    }
-    @keyframes aniSwooshInWCLRB {
-        0% {top: -100%;}
-        100% {top: 0%;}
-    }
-.workContentLargeReturnButtonSwooshOut {
-    -webkit-animation: aniSwooshInWCLRBo 1.2s forwards;
-    animation: aniSwooshInWCLRBo 1.2s forwards;
+@keyframes animPrViReturnButtonIn {
+    0% {top: -100%;}
+    100% {top: 0%;}
 }
-    @-webkit-keyframes aniSwooshInWCLRBo {
-        0% {top: 0%;}
-        100% {top: -100%;}
-    }
-    @keyframes aniSwooshInWCLRBo {
-        0% {top: 0%;}
-        100% {top: -100%;}
-    }
+.projectReturnButtonOut {
+    animation: animPrViReturnButtonOut 1.2s forwards;
+}
+@keyframes animPrViReturnButtonOut {
+    0% {top: 0%;}
+    100% {top: -100%;}
+}
 /*#endregion*/
 
-/* --- work large desc --- */
-.workDescBig { 
+/* --- sections for detailed description of project --- */
+/*#region*/
+/* --- project box contains viewport sized panels with various media detailing the project  --- */
+.projectBox { 
     position: absolute;
-    z-index: 20;
-    
+    z-index: 20;    
     height: 75%;
     width: 100%;
-    background-color: rgba(237, 237, 237, 100);
-    
-    color: #292828;
+    background-color: rgba(237, 237, 237, 100);    
+    color: var(--color-dark2);
     font-weight: 100;
     font-size: 18px;
+    top: 100%;
 }
-.workDescBigFadeIn {
-    -webkit-animation: aniFadeInWDB 0.8s forwards;
-    animation: aniFadeInWDB 0.8s forwards;
+.projectBoxIn {
+    animation: animPrBoxIn  0.8s forwards;
+    animation-delay: 0.4s;
 }
-    @-webkit-keyframes aniFadeInWDB {
-        0% {top: 100%;}
-        100% {top: 70%;}
-    }
-    @keyframes aniFadeInWDB {
-        0% {top: 100%;}
-        100% {top: 70%;}
-    }
-.workDescBigFadeOut {
-    -webkit-animation: aniFadeOutWDB 0.8s forwards;
-    animation: aniFadeOutWDB 0.8s forwards;
+@keyframes animPrBoxIn {
+    0% {top: 100%;}
+    100% {top: 70%;}
 }
-    @-webkit-keyframes aniFadeOutWDB {
-        0% {top: 70%;}
-        100% {top: 100%;}
-    }
-    @keyframes aniFadeOutWDB {
-        0% {top: 70%;}
-        100% {top: 100%;}
-    }
-
-.workDescBigBlackInfo {
+.projectBoxOut {
+    animation: animPrBoxOut 0.8s forwards;
+}
+@keyframes animPrBoxOut {
+    0% {top: 70%;}
+    100% {top: 100%;}
+}
+/* --- project summary/keynotes on top of project box --- */
+.projectBoxInfo {
     width: 100%;
     height: 30vh;
-    background-color:  #292828;
-    color: #EDEDED;
+    background-color:  var(--color-dark2);
+    color: var(--color-primary);
 }
-.workDescBigBlackInfo ::after {
+.projectBoxInfo ::after {
     content: "⇣ SCROLL DOWN ⇣";
-
     position: absolute;
     bottom: 46vh;
     right: 2vw;
-
-    text-shadow: -1px 0 #292828, 0 1px #292828, 1px 0 #292828, 0 -1px #292828;
 }
+/*#endregion*/
 
-.workDescBigPanel {
+/* --- viewport sized panels for various project details/media --- */
+/*#region*/
+.projectBoxPanel {
     height: 100vh;
-
     display: flex;
     align-content: center;
     justify-content: center;
     vertical-align: middle;
-    overflow: hidden; 
-    
+    overflow: hidden;     
     background-size: cover; 
     background-repeat: no-repeat;
     background-position: center; 
+    scroll-snap-align: end;
 }
-
-.workDescBigPanel video {
+.projectBoxPanel video {
     min-width: 100%; 
     min-height: 100%;
     object-fit: cover;
 }
-.workDescBigPanelTextbox {
+.projectBoxPanel figcaption {
     position: absolute;
-
     margin-top: 75vh;
     margin-left: 0vw;
     height: 10vh;
     width: 60vw;
-
-    border: 2px solid #292828;
+    border: var(--border-style2);
     background-color: #757575;
 }
-
-.workDescBigPanelEnd {
+.projectBoxPanelEnd {
     height: 30vh;
     background-color: red;
 }
+/*#endregion*/

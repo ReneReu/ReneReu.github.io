@@ -4,79 +4,79 @@
 <head>
 	<title>Rene Reufels - Portfolio</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=0.55, minimum-scale=0.1, maximum-scale=1.0, user-scalable=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=5, user-scalable=yes"/>
     <meta name="description" content="Webdesign | Photography | Art | Machine Learning"/>
     
-	<link href="css/pre/reset.css" type="text/css" media="screen" rel="stylesheet">
-	<link href="css/styles.css" type="text/css" media="screen" rel="stylesheet">
-    
-    <link href="css/loading.css" type="text/css" media="screen" rel="stylesheet">
+	<link href="css/lib/reset.css" media="screen" rel="stylesheet">
 
-    <link href="css/sub/subdom.css" type="text/css" media="screen" rel="stylesheet">    
-    <link href="css/sub/web1.css" type="text/css" media="screen" rel="stylesheet">    
-    
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="css/styles.css" media="screen" rel="stylesheet">    
+    <link href="css/loading.css" media="screen" rel="stylesheet">
+    <link href="css/header.css" media="screen" rel="stylesheet">   
 
-    <script type="text/javascript" language="javascript" src="js/web1.js"></script>
+    <link href="css/wq/wavequill.css" media="screen" rel="stylesheet"> 
     
-	<script src="js/modernizr.js"></script>
-	<script src="js/respond.min.js"></script>
+	<script src="js/lib/jquery-3.7.1.min.js"></script>
+    <script src="js/wq/konva.min.js"></script>
+
+    <script  src="js/wq/wavequill.js" type="module"></script>
 </head>
 
 <body>
-    
-    <div class="loadingscrn">
-        <div class="loadingscrnAnim">
-            <h1 class>L O A D I N G</h1>
+    <!-- Loading screen plays until all resources are loaded in-->
+    <div class="loadingScreen">
+        <div class="loadingAnimation">
+            <p>L O A D I N G</p>
             <div class="loadingCircles">
-                <div class="loaderC1"></div>
-                <div class="loaderC2"></div>
-                <div class="loaderC3"></div>
+                <div class="loadingCircle1"></div>
+                <div class="loadingCircle2"></div>
+                <div class="loadingCircle3"></div>
             </div>
         </div>
-        <div class="loadingscrnTop"></div>
-        <div class="loadingscrnMid"></div>
-        <div class="loadingscrnBot"></div>       
+        <div class="loadingScreenTop"></div>
+        <div class="loadingScreenMid"></div>
+        <div class="loadingScreenBot"></div>       
     </div>
     
-	<header>        
-        <div class="header">  
-            <p>Rene Reufels</p>         
-            <nav class="menu">
-                <ul>
-                    <li><a href="index.html"><div class="menuButton activeMenu">
-                        Back
-                    </div></a></li>                 
-                </ul>      
-            </nav>            
+	<!-- Header -->
+	<header class="header">
+        <div class="headerTop">
+            <div class="logo">
+                <a href="index.html" title="Portfolio">
+                    <img class="logoImg" src="img/wq/waveQuill.svg" alt="logo">
+                </a>         
+                <a class="logoName" href="index.html">
+                    <h1>Wavequill</h1> 
+                </a>
+            </div>
+            <p class="slogan">Wavequill</p>
         </div>
     </header>
     
-    <div class="content">
-        <img src="img/cy.gif" class="centerpiece"/>
-    </div>
+    <main class="content">
+        <!-- content of the sub page -->
+        <section>
+        </section>
+    </main>
     
     
     <script>
-        $(document).ready(function() {
-            preloading();
-            mainFunction();
-        });
-        
-        var xLoadingTime = 300;
-        
-        function preloading() {
-            setTimeout(function() {
-                $(".loadingscrn").addClass("loadedAnimation");
-            }, xLoadingTime);  
-            setTimeout(function() {
-                $(".loadingscrn").css({"display":"none"});
-            }, 1700 + xLoadingTime);  
-        }
-        
+        $(window).on("load", loaded);
 
+        /* --- loading completed --- */       
+        function loaded() {
+            const loadingTime = 1000;             
+            setTimeout(function(){
+                $(".loadingScreen").addClass("loadedAnimation");   
+                $(".loadingScreen").on("animationend", function() {
+                    setTimeout(function() {
+                        $(".loadingScreen").css("will-change", "auto");
+                        $(".loadingScreen").hide();
+                    }, loadingTime);
+                });    
+            }, loadingTime);            
+        }
     </script>
-    
-</body>    
-    
+
+</body>   
+
 </html>

@@ -1,153 +1,128 @@
+/* CSS for the header and nav bar, which includes a full, 
+a minimized as well as the mobile version */
+:root {
+    --headerTop-height: 100px;     
+    --headerTop-height-mobile: 150px; 
+}
 /* --- Header --- */
-header {
-    z-index: 50;
-	width: 100%;
-	height: 150px;
-	background-color: #292828;
-    position: relative;
-    max-width: none;
-}
-
-/* --- Header Top Bar --- */
-.headTop {
-    height: 100px;
-	background-color: #363534;   
-    overflow: hidden;
-}
-
-/* --- Header Top Logo--- */ 
-.logo {
-    position: relative;
-}
-
-.logoImg {
-    width: 100px;
-    height: 100px;
-    margin-left: 10px;
-    float: left
-}
-.logoImg img{
+.header {
+    z-index: 90;
     width: 100%;
-    height: auto;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    transition: top 0.5s ease;
 }
-
+/* --- Header Top Bar --- */
+/*#region*/
+.headerTop {
+    height: var(--headerTop-height);
+	background-color: var(--color-dark1);   
+    padding: 0 15px;  
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;    
+}
+/* --- Header Top Left Logo--- */ 
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.logoImg {
+    height: 90px;
+    width: auto;
+}
 .logoName {
     margin-left: 15px;
-    margin-top: 40px;
-    float: left;
+    margin-top: 20px;
     font-family: 'Comfortaa', sans-serif;
-    letter-spacing: 1px; 
-    font-size: 50px;
+    letter-spacing: 1px;  
 }
 .logoName h1 {
-    float: left;
-    color: #EDEDED;
-    transition: all 1s ease-in-out;
+    font-size: 50px;
+    color: var(--color-primary);
+    transition: color 0.5s ease-in-out;
 }
-.logoName:hover {
-    color: white;
+.logoName h1:hover {
+    color: var(--color-highlight);
 }
-.logoName:hover h1:nth-child(2),
-.logoName:hover h1:nth-child(4) {  
-    color: #E08970;
-}
-
-/* --- Header Top Slogan --- */
+/* --- Header Top Right Slogan --- */
 .slogan {
-    margin-left: 20px;
-    margin-left: 5px;
-    margin-top: 78px;
+    margin-top: 75px;
     font-size: 20px;
-    float: right;
-    letter-spacing: 5px;  
     font-weight: 100;
-    color: #EDEDED;
+    letter-spacing: 5px;  
+    color: var(--color-primary);
     text-transform: uppercase;
 }
-
-/* --- Header Top Responsivenes --- */
+/* --- Header Top mobile responsiveness --- */
 @media screen and (max-width: 800px) {
+    .headerTop {
+        height: var(--headerTop-height-mobile);
+        justify-content: center;
+    }
     .slogan {
         display: none;
     }
-    header {
-        height: 200px;
-    }
-    .headTop {
-        height: 150px;
-        position: relative;
-    }
-    .logo {
-        position: absolute;
-        width: 450px;
-        height: 100px;
-        margin: auto;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-    }
-}
 
+}
 @media screen and (max-width: 450px) {
     .logoName {
         display: none;
     }
-    .logo {
-        width: auto;
-        height: auto;
-    }
     .logoImg {
-        width: 100%;
-        height: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-    }
-    .logoImg img {
-        width: auto;
-        height: 100%;
-        position: absolute;
-        margin: auto;
-        left: 0;
-        right: 0;
+        height: 130px;
+        padding: 5px;       
     }
 }
-
+/*#endregion*/
 
 /* --- Header Bot Bar --- */
-.headBot {
-	width: 100%;
+/*#region*/
+.headerBot {
+    display: block;
 	height: 50px;
-	background-color: #292828;
+	background-color: var(--color-dark2);
     overflow: hidden; 
-    position: sticky;
 }
 /* --- Header Bot Menu --- */
-.menu ul {
+.menu {
+    display:  flex;
+    justify-content: flex-end;
     margin-left: auto;
     margin-right: auto;
     list-style: none; 
 }
-.menu ul li {
-    float: right;
+/* --- Header Bot Menu Buttons --- */
+.menuButton {
+    display: block;
+    background-color: var(--color-dark2);
+    padding: 6px 35px;
+    border: var(--border-style4);
+    font-size: 30px;
+    text-align: center;
+    color: var(--color-primary); 
+    cursor: pointer;
+    transition: color 0.25s ease-in-out;
 }
-
+.menuButton:hover {
+    background-color: var(--color-dark1);
+    color: var(--color-highlight);
+}
+.menuButtonActive{
+    color: var(--color-highlight);
+}
 /* --- Header Bot Mobile Menu --- */
-
-.mobileMenu ul {
-    display: flex;
+.mobileMenu {
     flex-direction: column;
+    justify-content: flex-start;
 }
-.mobileMenu ul li {
-    float: none;
+/* --- Spacer Menu Point --- */
+.menu li:nth-child(2) .menuButton{
+    display: none; 
 }
-.mobileMenu ul li:nth-child(3) {order: 7;}
-.mobileMenu ul li:nth-child(4) {order: 6;}
-.mobileMenu ul li:nth-child(5) {order: 5;}
-.mobileMenu ul li:nth-child(6) {order: 4;}
-.mobileMenu ul li:nth-child(7) {order: 3;}
-
 .mobileMenuButton {
     display: none; 
     position: absolute;
@@ -155,133 +130,34 @@ header {
     left: 0;
     right: 0;   
 }
-
-
-/* --- Header Bot Menu Buttons --- */
-.menuButton {
-    display: block;
-    padding: 6px 35px;
-    border-style: solid;
-    border-color: #292828;
-    border-width: 4px;
-    cursor: pointer;
-    
-    font-size: 30px;
-    font-weight: 100;
-    text-decoration: none;
-    text-align: center;
-    color: #EDEDED;   
-    background-color: #292828;
-    
-    transition: color 0.25s ease-in-out;
-}
-
-.menuButton:hover {
-    background-color: #363534;
-    color: #E08970;
-}
-
-.activeMenu{
-    color: #E08970;
-}
-
-/* --- Spacer Menu Point --- */
-.menu ul li:nth-child(2){
-    display: none; 
-}
-
-/* --- Header Bot Menu Responsivenes--- */
+/* --- Header Bot Menu mobile responsiveness--- */
 @media screen and (max-width: 800px) {
     .mobileMenuButton {
-        display:list-item; 
+        display: block; 
     }
-    .menu ul li:nth-child(2){
+    .menu li:nth-child(2) .menuButton{
         display: block; 
     }
 }
+/*#endregion*/
 
-
-/* --- Small header + animation --- */
-.headerFade{
-    -webkit-animation: headerAnim 0.5s forwards;
-    animation: headerAnim 0.5s forwards;
+/* --- minimized header (only bot bar showing) animation --- */
+/*#region*/
+.headerMinimized{
+    top: calc(-1 * var(--headerTop-height));
 }
-.headerFadeBack{
-    -webkit-animation: headerAnim 0.5s forwards reverse;
-    animation: headerAnim 0.5s forwards reverse;
+@media screen and (max-width: 800px) {        
+    .headerMinimized{
+        top: calc(-1 * var(--headerTop-height-mobile));
+    }
 }
-    @-webkit-keyframes headerAnim {
-        from {top: 0px;}
-        to {top: -100px;}
-    }
-    @keyframes headerAnim {
-        from {top: 0px;}
-        to {top: -100px;}
-    }
-
-.headerFaded{
-    top: -100px;
+/* --- Collapse header (no header bar) animation --- */
+.headerOut{
+    top: calc(-1 * var(--header-height));
 }
-
-    @media screen and (max-width: 800px) {
-        @-webkit-keyframes headerAnim {
-            from {top: 0px;}
-            to {top: -150px;}
-        }
-        @keyframes headerAnim {
-            from {top: 0px;}
-            to {top: -150px;}
-        }
-        .headerFaded{
-            top: -150px;
-        }
+@media screen and (max-width: 800px) {        
+    .headerOut{
+        top: calc(-1 * var(--header-height-mobile));
     }
-
-
-
-/* --- Small header + animation new --- */
-.headerGone{
-    -webkit-animation: headerAnim2 0.5s forwards;
-    animation: headerAnim2 0.5s forwards;
 }
-    @-webkit-keyframes headerAnim2 {
-        from {top: -100px;}
-        to {top: -150px;}
-    }
-    @keyframes headerAnim2 {
-        from {top:-100px;}
-        to {top: -150px;}
-    }
-    @media screen and (max-width: 800px) {
-        @-webkit-keyframes headerAnim2 {
-            from {top: -150px;}
-            to {top: -200px;}
-        }
-        @keyframes headerAnim2 {
-            from {top: -150px;}
-            to {top: -200px;}
-        }
-    }
-
-.headerIn{
-    -webkit-animation: headerAnim3 0.5s forwards;
-    animation: headerAnim3 0.5s forwards;
-}
-    @-webkit-keyframes headerAnim3 {
-        from {top: -150px;}
-        to {top: -100px;}
-    }
-    @keyframes headerAnim3 {
-        from {top:-150px;}
-        to {top: -100px;}
-    }
-    @media screen and (max-width: 800px) {
-        @-webkit-keyframes headerAnim3 {
-            from {top: -200px;}
-            to {top: -150px;}
-        }
-        @keyframes headerAnim3 {
-            from {top: -200px;}
-            to {top: -150px;}
-        }
-    }
+/*#endregion*/
