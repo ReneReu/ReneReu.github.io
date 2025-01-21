@@ -19,7 +19,7 @@
 	<script src="js/lib/jquery-3.7.1.min.js"></script>
 
     <script src="js/main.js" type="module"></script>
-    <script src="js/work.js" type="module"></script>
+    <script src="js/loading.js" type="module"></script>
 
     <link rel="preload" as="image" href="img/logo.svg">
      <!--
@@ -65,11 +65,10 @@
                     <p>✕</p>
                 </span></li>
                 <li><div class="menuButton">.</div></li>  
-                <li><div class="menuButton menuButtonActive">Start</div></li>
-                <li><div class="menuButton">Work</div></li>
-                <li><div class="menuButton">Art</div></li>
-                <li><a href="thing.html"><div class="menuButton">Contact</div></a></li>
-                
+                <li><div class="menuButton menuButtonActive" data-nav-zone="0">Start</div></li>
+                <li><div class="menuButton" data-nav-zone="1">Work</div></li>
+                <li><div class="menuButton" data-nav-zone="2" >Art</div></li>
+                <li><a href="thing.html"><div class="menuButton" data-nav-zone="3">Contact</div></a></li>                
             </ul>      
         </nav>   
     </header>
@@ -80,14 +79,13 @@
             <!-- centerPiece containing the three.js scene -->
             <div class="centerPiece"></div>
 
-            <div class="startToShowcase">
+            <div class="startToShowcase" data-nav-zone="1">
                 <h2>WORK</h2>
             </div>
         </section>
         
         <section class="showcaseContent displayNone">   
             <!--------------- Selection of Work --------------->
-
             <nav class="showcaseSidebar">
                 <div class="showcaseSidebarNavigation">
                     <div class="showcaseSidebarButton">
@@ -107,7 +105,7 @@
                     </div>
                 </div>                
             </nav>
-            <button class="showcaseBackToStartButton opacityNone" aria-label="Back to Start"></button>
+            <button class="showcaseBackToStartButton opacityNone" data-nav-zone="0" aria-label="Back to Start"></button>
 
             <div class="showcaseBox">
                 <div class="showcaseFrame"
@@ -198,23 +196,5 @@
                 </article>
             </section>        
     </main>
-    
-    <script>
-        $(window).on("load", loaded);
-
-        /* --- loading completed --- */       
-        function loaded() {
-            const loadingTime = 1000;             
-            setTimeout(function(){
-                $(".loadingScreen").addClass("loadedAnimation");   
-                $(".loadingScreen").on("animationend", function() {
-                    setTimeout(function() {
-                        $(".loadingScreen").css("will-change", "auto");
-                        $(".loadingScreen").hide();
-                    }, loadingTime);
-                });    
-            }, loadingTime);            
-        }
-    </script>
 </body>    
 </html>

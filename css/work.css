@@ -122,7 +122,6 @@ in detail */
 /* --- Showcase shortcut navigation sidebar --- */
 /*#region*/
 .showcaseSidebar {
-    z-index: 10;
     width: 7%;
     height: 100%;
     margin-left: 0%;
@@ -230,7 +229,7 @@ in detail */
 }
 /* --- return from project to showcase view button + animation --- */
 .projectReturnButton {
-    z-index: 21;
+    z-index: 90;
     position: fixed;
     top: 0%;
     left: 2%;    
@@ -260,7 +259,6 @@ in detail */
 /* --- project box contains viewport sized panels with various media detailing the project  --- */
 .projectBox { 
     position: absolute;
-    z-index: 20;    
     height: 75%;
     width: 100%;
     background-color: rgba(237, 237, 237, 100);    

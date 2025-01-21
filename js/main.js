@@ -1,82 +1,64 @@
-//--- interface with work section of the website ---
-import { toShowcaseView, closeShowcase, showcaseAnimationState} from './work.js';
+//--- Navigation ---
+
+import {collapseMobileMenu} from './mobileMenu.js';
+//--- interface with other view sections of the website ---
+import {showcaseAnimationState, toShowcaseView, closeShowcase} from './showcase.js';
 //--- interface with centerpiece section ---
 //import { eventListenerCenterPieceOff, eventListenerCenterPieceOn } from './centerpiece.js';
 
-//--- expand/collapse mobile menu ---
-//#region
-    let mobileMenuState = false;
-
-    //--- function to expand / collapse mobile menu and switch mobile menu button icon---
-    function expandMobileMenu() {
-        $(".headerBot").css({"overflow": "visible"});         
-        $(".expandMenu").addClass("switchButtonIconOther");
-        $(".menu").addClass("mobileMenu");
-        mobileMenuState = true;
-    }
-    export function collapseMobileMenu() {
-        $(".headerBot").css({"overflow": "hidden"});
-        $(".expandMenu").removeClass("switchButtonIconOther");
-        $(".menu").removeClass("mobileMenu");
-        mobileMenuState = false;
-    }   
-    //--- expand / collapse mobile menu based on current mobileMenuState ---
-    $(".expandMenu").click(function() {
-        if (mobileMenuState === false) {
-            expandMobileMenu();
-            //--- collapse mobile menu on click outside menu ---
-            $(".content").click(function() {
-                collapseMobileMenu();
-            }); 
-        }
-        else if (mobileMenuState === true) {
-            collapseMobileMenu();
-        }
-    });
-    //--- collapse mobile menu when screen wider than 800 (scrollbar-length 17) ---
-    $(window).on("resize", function() {
-        if ($(window).width() > 800) {
-            collapseMobileMenu();
-        }
-    });
-//#endregion
 
 //--- Functions for switching between start and showcase view ---
-//#region
-    //--- 3 Start- 4 Work- 5 Art- 6 Contact
-    let activeMenuZone = 3;
+const header = document.querySelector(".header");
+const menuButton = document.querySelectorAll(".menuButton");
+//--- 0 Start - 1 Showcase - 2 Art - 3 Contact
+let activeView = 0;
 
-    //--- Switching to showcase screen via "Work" area / menu ---
-    $(".startToShowcase, .menu li:nth-child(4) div").click(function() {
-        if (activeMenuZone!=4 && !showcaseAnimationState) {
-            activeMenuZone=4;
-            toShowcaseView();
-            //eventListenerCenterPieceOff();
-            //--- mini header & highlight correct menu button ----
-            $("header").addClass("headerMinimized");
-            $(".menuButton").removeClass("menuButtonActive");
-            $(".menu li:nth-child(" + activeMenuZone + ") div").addClass("menuButtonActive");
-            
-            setTimeout(function() {
-                collapseMobileMenu();
-            }, 50); 
-            
-        }        
+//--- call the correct transition functions between the views ---
+const transitionFunctions = {
+    0: { // Start View
+        1: () => toShowcaseView(),  
+        //2: () => toArtView(),          
+        //3: () => toContactView()          
+    },
+    1: { // Showcase View
+        0: () => closeShowcase(),    
+    },
+    2: { // Art View
+        //0: () => closeArt(),     
+    }
+};
+//--- update header state and menu ---
+function updateHeader(targetView) {
+    activeView = targetView;
+    //--- normal header on start view - other views have minimized header ---
+    if (activeView === 0) {
+        header.classList.remove("headerMinimized");           
+    } else {
+        header.classList.add("headerMinimized");
+    }
+    //--- highlight menu button of active view ---
+    menuButton.forEach(button => {
+        button.classList.remove("menuButtonActive");
     });
-    //--- Switching to start screen via "back" area / menu ---
-    $(".showcaseBackToStartButton, .menu li:nth-child(3) div").click(function() {
-        if (activeMenuZone!=3 && !showcaseAnimationState) {
-            activeMenuZone=3;
-            closeShowcase();
-            //eventListenerCenterPieceOn(); 
-            //--- default header & highlight correct menu button ---
-            $("header").removeClass("headerMinimized");
-            $(".menuButton").removeClass("menuButtonActive");
-            $(".menu li:nth-child(" + activeMenuZone + ") div").addClass("menuButtonActive");
-            
-            setTimeout(function() {
-                collapseMobileMenu();
-            }, 50); 
+    const activeMenuButton = document.querySelector(`.menu [data-nav-zone="${activeView}"]`);
+    activeMenuButton.classList.add("menuButtonActive");
+    collapseMobileMenu();
+};
+//--- navigate from active to target view and transition 
+function navigateTo(targetView) {
+    if (activeView !== targetView && !showcaseAnimationState) {
+        const transitionFunction = transitionFunctions[activeView]?.[targetView];
+        if (transitionFunction) {
+            transitionFunction(); // Calls the function if it exists
+            updateHeader(targetView);
+        } else {
+            console.warn("No transition defined for this view change.");
         }
-    });
-//#endregion 
+    }
+}
+//--- nav event listeners ---
+document.querySelectorAll("[data-nav-zone]").forEach(element => {
+    //--- get the value of data-nav-zone from the element ---
+    const targetView = parseInt(element.dataset.navZone, 10);
+    element.addEventListener("click", () => navigateTo(targetView));
+});

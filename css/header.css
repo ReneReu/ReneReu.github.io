@@ -3,6 +3,9 @@ a minimized as well as the mobile version */
 :root {
     --headerTop-height: 100px;     
     --headerTop-height-mobile: 150px; 
+    --headerBot-height: 50px;
+    --header-height: calc(var(--headerTop-height) + var(--headerBot-height));
+    --header-height-mobile: calc(var(--headerTop-height-mobile) + var(--headerBot-height));
 }
 /* --- Header --- */
 .header {
@@ -66,7 +69,6 @@ a minimized as well as the mobile version */
     .slogan {
         display: none;
     }
-
 }
 @media screen and (max-width: 450px) {
     .logoName {
@@ -83,7 +85,7 @@ a minimized as well as the mobile version */
 /*#region*/
 .headerBot {
     display: block;
-	height: 50px;
+	height: var(--headerBot-height);
 	background-color: var(--color-dark2);
     overflow: hidden; 
 }

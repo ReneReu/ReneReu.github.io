@@ -38,7 +38,7 @@
 /* Animation of the loading screen featuring 3 individual parts circling around the center of the screen */
 /*#region*/
 .loadingAnimation {
-    z-index: 101;
+    z-index: 100;
     position: absolute;
     display: flex;
     justify-content: center;
