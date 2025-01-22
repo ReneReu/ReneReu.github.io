@@ -12,7 +12,6 @@ in detail */
 /* --- showcase zone--- */
 .showcaseBackToStartButton {
     position: absolute;
-    z-index: 11;
     top: 55px;
     left: calc(50% - 27px);
     width: 50px;
@@ -32,6 +31,7 @@ in detail */
     justify-content: center;
     align-items: center; 
     overflow: hidden;
+    padding-top: var(--headerBot-height);
 }
 /* --- showcase frame for individual pic and description --- */
 .showcaseFrame {
@@ -121,7 +121,7 @@ in detail */
 
 /* --- Showcase shortcut navigation sidebar --- */
 /*#region*/
-.showcaseSidebar {
+.showcaseNavigation {
     width: 7%;
     height: 100%;
     margin-left: 0%;
@@ -130,7 +130,7 @@ in detail */
     display: flex;
     align-items: center; 
 }
-.showcaseSidebarNavigation {
+.showcaseSidebar {
     display: none;
     width: 100%;    
     margin-top: 50px;
@@ -210,13 +210,12 @@ in detail */
 }
 /* --- project view --- hide classes from showcase view --- */
 .projectView { 
-    display: flex;
     justify-content: center;
     align-items: center; 
     overflow-y: scroll;
     height: 100vh;
 }
-.projectView .showcaseSidebar {
+.projectView .showcaseNavigation {
     display: none;
 }
 .projectView .showcaseFrame {
@@ -258,7 +257,6 @@ in detail */
 /*#region*/
 /* --- project box contains viewport sized panels with various media detailing the project  --- */
 .projectBox { 
-    position: absolute;
     height: 75%;
     width: 100%;
     background-color: rgba(237, 237, 237, 100);    
@@ -266,6 +264,10 @@ in detail */
     font-weight: 100;
     font-size: 18px;
     top: 100%;
+
+    position: relative;
+    display: flex;
+
 }
 .projectBoxIn {
     animation: animPrBoxIn  0.8s forwards;

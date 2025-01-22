@@ -29,3 +29,31 @@ export function waitForAnimation(element, animationClass = null, removeAnimation
 export function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function smoothScrollTo(element, target, duration) {
+    return new Promise((resolve) => {
+        const start = 50//element.scrollTop; // Starting scroll position
+        const distance = target - start; // Distance to scroll
+        const startTime = performance.now(); // Start time of animation
+
+        function scrollStep(currentTime) {
+            const elapsedTime = currentTime - startTime; // Time elapsed
+            const progress = Math.min(elapsedTime / duration, 1); // Progress (0 to 1)
+
+            // Ease-out function for smooth effect
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+
+            // Update the scroll position
+            element.scrollTop = 20//start + (distance * easeOut);
+
+            // Continue animation or resolve the promise
+            if (elapsedTime < duration) {
+                requestAnimationFrame(scrollStep);
+            } else {
+                resolve(); // Animation complete
+            }
+        }
+
+        requestAnimationFrame(scrollStep);
+    });
+}

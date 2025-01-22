@@ -50,6 +50,9 @@ a {
 .displayNone {
     display: none !important;
 }
+.displayBlock {
+    display: block !important;
+}
 .opacityNone {
     opacity: 0 !important;
 }

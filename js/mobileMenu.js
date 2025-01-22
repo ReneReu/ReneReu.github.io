@@ -40,8 +40,9 @@ document.addEventListener("click", (e) => {
     }
 });
 //--- collapse mobile menu when screen wider than 800 ---
-window.addEventListener("resize", function () {
+function wideScreenCollapseMenu() {
     if (window.innerWidth > 800) {
         collapseMobileMenu();
     }
-});
+}
+window.addEventListener("resize", wideScreenCollapseMenu);

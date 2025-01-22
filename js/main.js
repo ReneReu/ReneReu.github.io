@@ -2,7 +2,7 @@
 
 import {collapseMobileMenu} from './mobileMenu.js';
 //--- interface with other view sections of the website ---
-import {showcaseAnimationState, toShowcaseView, closeShowcase} from './showcase.js';
+import {showcaseAnimationState, startShowcase, closeShowcase} from './showcase.js';
 //--- interface with centerpiece section ---
 //import { eventListenerCenterPieceOff, eventListenerCenterPieceOn } from './centerpiece.js';
 
@@ -10,22 +10,39 @@ import {showcaseAnimationState, toShowcaseView, closeShowcase} from './showcase.
 //--- Functions for switching between start and showcase view ---
 const header = document.querySelector(".header");
 const menuButton = document.querySelectorAll(".menuButton");
+const startContent = document.querySelector(".startContent");
 //--- 0 Start - 1 Showcase - 2 Art - 3 Contact
 let activeView = 0;
 
 //--- call the correct transition functions between the views ---
 const transitionFunctions = {
     0: { // Start View
-        1: () => toShowcaseView(),  
-        //2: () => toArtView(),          
-        //3: () => toContactView()          
+        1: () => init(startShowcase),  
+        //2: () => toArt(),          
+        //3: () => toContact()          
     },
     1: { // Showcase View
-        0: () => closeShowcase(),    
+        0: () => wrapUp(closeShowcase),
     },
     2: { // Art View
         //0: () => closeArt(),     
     }
+};
+function init (startFunction) {
+    try {
+        startContent.classList.add("displayNone");
+        startFunction();
+    } catch (e) {
+        console.error("Error in init:", e);
+    } 
+};
+async function wrapUp (closeFunction) {
+    try {
+        await closeFunction();
+        startContent.classList.remove("displayNone", "opacityNone"); 
+    } catch (e) {
+        console.error("Error in wrapUp:", e);
+    } 
 };
 //--- update header state and menu ---
 function updateHeader(targetView) {
@@ -45,11 +62,11 @@ function updateHeader(targetView) {
     collapseMobileMenu();
 };
 //--- navigate from active to target view and transition 
-function navigateTo(targetView) {
+async function navigateTo(targetView) {
     if (activeView !== targetView && !showcaseAnimationState) {
         const transitionFunction = transitionFunctions[activeView]?.[targetView];
-        if (transitionFunction) {
-            transitionFunction(); // Calls the function if it exists
+        if (transitionFunction) { // Calls the function if it exists
+            transitionFunction(); 
             updateHeader(targetView);
         } else {
             console.warn("No transition defined for this view change.");
@@ -62,3 +79,4 @@ document.querySelectorAll("[data-nav-zone]").forEach(element => {
     const targetView = parseInt(element.dataset.navZone, 10);
     element.addEventListener("click", () => navigateTo(targetView));
 });
+
