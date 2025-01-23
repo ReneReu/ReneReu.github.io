@@ -11,7 +11,7 @@ export function handleClickOutside(event, elementToExclude, callback) {
     document.addEventListener("click", listener);
 }
 //--- resolve promise when animation ends on element and pot add animation class and delete it afterwards ---
-export function waitForAnimation(element, animationClass = null, removeAnimationClassAfterwards = false) {
+export function waitForAnimation(element, animationClass = null, removeAnimationClassAfterwards = false, callback = null) {
     return new Promise((resolve) => {
         if (animationClass) {
             element.classList.add(animationClass);
@@ -23,37 +23,40 @@ export function waitForAnimation(element, animationClass = null, removeAnimation
                 element.classList.remove(animationClass);
             }
             resolve();
+            if (callback && typeof callback === 'function') {
+                callback();
+            }
         });
     });
 }
 export function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+export function smoothScrollToElement(element, endY, duration) {
+    const startY = element.scrollTop;
+    const distanceY = endY - startY;
+    const startTime = new Date().getTime();
+    console.log("util: "+startY+" "+distanceY);
 
-export function smoothScrollTo(element, target, duration) {
-    return new Promise((resolve) => {
-        const start = 50//element.scrollTop; // Starting scroll position
-        const distance = target - start; // Distance to scroll
-        const startTime = performance.now(); // Start time of animation
+    duration = typeof duration !== 'undefined' ? duration : 400;
 
-        function scrollStep(currentTime) {
-            const elapsedTime = currentTime - startTime; // Time elapsed
-            const progress = Math.min(elapsedTime / duration, 1); // Progress (0 to 1)
+    const easeInOutQuad = (t, b, c, d) => {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+    };
 
-            // Ease-out function for smooth effect
-            const easeOut = 1 - Math.pow(1 - progress, 3);
+    const animateScroll = () => {
+        const currentTime = new Date().getTime() - startTime;
+        const newY = easeInOutQuad(currentTime, startY, distanceY, duration);
+        element.scrollTop = newY;
 
-            // Update the scroll position
-            element.scrollTop = 20//start + (distance * easeOut);
-
-            // Continue animation or resolve the promise
-            if (elapsedTime < duration) {
-                requestAnimationFrame(scrollStep);
-            } else {
-                resolve(); // Animation complete
-            }
+        if (currentTime < duration) {
+            requestAnimationFrame(animateScroll);
+        } else {
+            element.scrollTop = endY;
         }
-
-        requestAnimationFrame(scrollStep);
-    });
+    };
+    animateScroll();
 }

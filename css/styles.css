@@ -56,9 +56,6 @@ a {
 .opacityNone {
     opacity: 0 !important;
 }
-.snapable {
-    scroll-snap-type: block proximity;
-}
 /* --- switch button text --- */
 .switchButtonIcon p:nth-child(1){
     display: block; 
