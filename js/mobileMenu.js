@@ -1,6 +1,6 @@
 //--- mobileMenu - expand/collapse mobile menu ------
 
-import {handleClickOutside} from './util.js'; 
+import {handleClickOutside} from './utils.js'; 
 
 const header = document.querySelector(".header");
 const headerBot = document.querySelector(".headerBot");

@@ -1,6 +1,6 @@
 //--- Showcase Work presentation ---
 
-import {waitForAnimation, delay, smoothScrollToElement} from './util.js'; 
+import {waitForAnimation, delay, smoothScrollToElement} from './utils.js'; 
 
 //--- frequently used DOM elements ---
 const showcaseContent = document.querySelector(".showcaseContent");
