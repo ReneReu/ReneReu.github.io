@@ -1,6 +1,6 @@
 //--- Showcase Work presentation ---
 
-import {waitForAnimation, delay, smoothScrollToElement} from './utils.js'; 
+import {waitForAnimation, waitForTransition, delay, smoothScrollToElement} from './utils.js'; 
 
 //--- frequently used DOM elements ---
 const showcaseContent = document.querySelector(".showcaseContent");
@@ -10,6 +10,7 @@ const showcaseBox = document.querySelector(".showcaseBox");
 const showcaseNavigation = document.querySelector(".showcaseNavigation");
 const showcaseSidebar = document.querySelector(".showcaseSidebar");
 const showcaseSidebarButtons = document.querySelectorAll(".showcaseSidebarButton");
+const showcaseSidebarButtonDesign = document.querySelectorAll(".showcaseSidebarButtonDesign");
 const showcaseBackToStartButton = document.querySelector(".showcaseBackToStartButton");
 
 const showcaseItems = 4; //0 to 4
@@ -25,53 +26,53 @@ export let showcaseAnimationState = false;
         showcaseContent.classList.remove("displayNone"); 
         //--- play animation for first showcase frame (transition frame 0 to 1) ---
         nextShowcaseFrame();
-        //--- add padding after first part of animation ---
-        await waitForAnimation(showcaseBox);
-            showcaseTitle.classList.add("showcaseTitleDeco");    
-            showcaseBackToStartButton.classList.remove("opacityNone");                 
-            //--- animate sidebar und sidebar buttons in ---
-            showcaseSidebar.classList.add("displayBlock");
-            await waitForAnimation(showcaseNavigation, "showcaseSidebarIn", true)               
-                initShowcaseSidebarButtons();
-                //--- activate scroll and touch event listener ---
-                eventListenerShowcaseNavigationOn();
-                // TODO remove listener later and what if mid animation
-                //--- click on showcase frame to open detailed view ---
-                showcaseFrame.addEventListener("click", enableProjectView);             
+        //--- after first part of animation ---
+        await waitForAnimation(showcaseBox)
+        showcaseTitle.classList.add("showcaseTitleDeco");  
+        showcaseBackToStartButton.classList.remove("opacityNone");
+        showcaseSidebar.classList.add("showcaseSidebarIn");
+        initShowcaseSidebarButtons();
+        //--- activate scroll and touch event listener ---
+        eventListenerShowcaseNavigationOn();
+        //--- click on showcase frame to open detailed view ---     
+        showcaseFrame.addEventListener("click", enableProjectView);              
     }
     //--- close showcase view + animations and call toStartView() ---
     export async function closeShowcase() {
         nextShowcaseNumber = -1;
+        showcaseBackToStartButton.classList.add("opacityNone");        
+        showcaseSidebar.classList.remove("showcaseSidebarIn");
+        removeShowcaseSidebarButtons();
         //--- remove event listeners ---
-        eventListenerShowcaseNavigationOff();      
-        //--- animate sidebar und sidebar buttons out ---
-        waitForAnimation(showcaseNavigation, "showcaseSidebarOut", true)
-        .then(() => {
-            showcaseSidebar.classList.remove("displayBlock");
-            showcaseBackToStartButton.classList.add("opacityNone");
-        });        
+        eventListenerShowcaseNavigationOff();  
+        showcaseFrame.removeEventListener("click", enableProjectView);
         //--- play animation to end showcase frame (transition frame X to 0) ---
         prevShowcaseFrame(); 
         await waitForAnimation(showcaseBox);
-            //--- remove padding after first part of animation ---
-            showcaseTitle.classList.remove("showcaseTitleDeco");
-            await waitForAnimation(showcaseBox)
-                //--- reset animation classes and initialize start view after second part of animation ---
-                resetShowcaseAnimation();
-                showcaseContent.classList.add("displayNone");                   
+        //--- remove padding after first part of animation ---
+        showcaseTitle.classList.remove("showcaseTitleDeco");
+        await waitForAnimation(showcaseBox);
+        //--- reset animation classes and initialize start view after second part of animation ---
+        resetShowcaseAnimation();
+        showcaseContent.classList.add("displayNone");        
     }    
-    //--- work sidebar navigation initializing each button + animation ---
-    function initShowcaseSidebarButtons(){        
+    //--- sidebar navigation initializing each button + animation ---
+    function initShowcaseSidebarButtons() {        
         showcaseSidebarButtons.forEach((button, index) => {
-            //--- delay between each button animation start ---
-            let delay = `${index * 250}ms`;    
-            //--- display and start each button ---
+            const delay = (index + 1) * 150;    
+            //--- display and start each button delayed ---
             const designElement = button.querySelector(".showcaseSidebarButtonDesign");
-            designElement.classList.add("displayBlock", "showcaseSidebarButtonDesignLoad");
-            designElement.style.animationDelay = delay;
+            setTimeout(() => {
+                designElement.classList.add("showcaseSidebarButtonDesignLoad");
+            }, delay);
         });       
     }    
-    //--- work sidebar navigation set active button ---
+    function removeShowcaseSidebarButtons() {        
+        showcaseSidebarButtonDesign.forEach((button) => {
+            button.classList.remove("showcaseSidebarButtonDesignLoad");
+        });
+    } 
+    //--- set active button for sidebar navigation  ---
     function activeShowcaseSidebarButton() {
         showcaseSidebarButtons[activeShowcaseNumber]?.querySelector(".showcaseSidebarButtonDesign")?.classList.remove("showcaseSidebarButtonActive");
         //--- true when called by closeShowcase() ---        
@@ -219,7 +220,7 @@ export let showcaseAnimationState = false;
     }
 //#endregion 
 
-//--- TODO interface showcase frame and detailed project view --- 
+//--- interface showcase frame and detailed project view --- 
 //#region
 const projectView = document.querySelector(".projectView");
 const projectBox = document.querySelector(".projectBox");
@@ -227,18 +228,23 @@ const projectReturnButton = document.querySelector(".projectReturnButton");
 const header = document.querySelector(".header");
 
 let projectViewState = false;
-
+let activeProject;
 
 function enableProjectView() {
-    if (!projectViewState) {
-        expandProjectView();  
-        projectReturnButton.addEventListener("click", checkStateEventListener);
+    if (!showcaseAnimationState && !projectViewState) {
+        activeProject = document.querySelector("#project" + activeShowcaseNumber); 
+
+        expandProjectView();
+        showcaseFrame.removeEventListener("click", enableProjectView);
+        //--- click on return button to go back to correspondent frame ---
+        projectReturnButton.addEventListener("click", disableProjectView);
+        //--- prevent switching of showcase frames ---
+        showcaseAnimationState = true;
+        eventListenerShowcaseNavigationOff();
     }    
 };
-//--- click on return button to go back to correspondent frame --- 
-async function checkStateEventListener() {
-    //--- close detailed view and return to showcase frame ---
-    //--- scroll back to top of site and then close projectview ---  
+async function disableProjectView() {
+    //--- scroll back to top of site and then close projectview and return to showcase frame ---  
     if (projectViewState) {
         const projectView = document.querySelector(".projectView");
         const scrollAmount = projectView.scrollTop;
@@ -246,100 +252,67 @@ async function checkStateEventListener() {
         if (scrollAmount === 0) {
             closeProjectView();
         } else {
-            const animationDuration = (scrollAmount * 0.15) + 500;    
-
+            //TODO instead duration check scrollTop==0
+            const animationDuration = 500 + (scrollAmount * 0.15);
             projectView.scrollTo({ top: 0, behavior: "smooth" });
             await delay(animationDuration);
-            closeProjectView();
-            projectReturnButton.removeEventListener("click", checkStateEventListener);
+            closeProjectView();   
         }
+        projectReturnButton.removeEventListener("click", disableProjectView);
+        showcaseFrame.addEventListener("click", enableProjectView);
+        //--- add listener back again ---
+        showcaseAnimationState = false; 
+        eventListenerShowcaseNavigationOn();
     }      
 };
+
 //--- open detailed project view --- 
-async function expandProjectView() {            
-    waitForAnimation(showcaseNavigation, "showcaseSidebarOut");
-    //--- prevent switching of showcase frames ---
-    showcaseAnimationState = true;
-    eventListenerShowcaseNavigationOff();
-    //--- animations for opening project view ---
-    expandingProjectView(); 
-    //--- backbutton transition 06 ---
-    showcaseBackToStartButton.classList.add("opacityNone"); 
-    //--- header animation ---
-    header.classList.add("headerOut");
-    //--- backButton animation 08 ---
-    projectReturnButton.classList.remove("displayNone");
-    waitForAnimation(projectReturnButton, "projectReturnButtonIn", true);
-    //--- sidebar animation ---
-        showcaseBackToStartButton.classList.add("displayNone");             
-        showcaseNavigation.classList.remove("showcaseSidebarIn");
-        showcaseTitle.classList.remove("showcaseTitleDeco");
-        showcaseTitle.querySelectorAll("p").forEach((element) => {
-            element.classList.add("displayNone");
-            console.log(element);
-        });                
-}    
+function expandProjectView() {
+    showcaseSidebar.classList.remove("showcaseSidebarIn");
+    showcaseBackToStartButton.classList.add("opacityNone"); //add smooth transition
+    header.classList.add("headerOut");   
+    showcaseTitle.classList.add("opacityNone"); //smoother?
+    showcaseFrame.classList.add("imgFilterNone");
+
+    expandingProjectView();           
+}
+//--- close detailed project view --- 
+function closeProjectView() {
+    showcaseSidebar.classList.add("showcaseSidebarIn");
+    showcaseBackToStartButton.classList.remove("opacityNone");
+    header.classList.remove("headerOut");
+    showcaseTitle.classList.remove("opacityNone");
+    showcaseFrame.classList.remove("imgFilterNone");
+
+    closingProjectView();
+}
 //--- animation opening project view --- 
 async function expandingProjectView() {
-    //--- grey filter animation 08 ---
-    showcaseFrame.classList.add("showcaseGreyFilterRemove");
-    showcaseContent.classList.add("projectView");    
-    document.querySelector("#project" + activeShowcaseNumber).classList.remove("displayNone");
-    projectBox.classList.replace("displayNone", "projectBoxIn");
-    //const panel = document.querySelectorAll("projectBoxPanel");
-    //panel.classList.add("snapable");
-    //--- showcase frame animation 08 ---
-    await waitForAnimation(showcaseBox, "projectOpening");
-        //---  --- 
-        //projectView.classList.add("snapable");  
-        projectViewState = true;                                                                             
+    projectBox.classList.remove("displayNone");
+    showcaseContent.classList.add("projectView");
+    projectViewState = true;
+ 
+    activeProject.classList.add("displayBlock");
+    activeProject.classList.add("projectBoxIn");
+    await waitForAnimation(showcaseBox, "projectOpening"); //forwards?
+    projectReturnButton.classList.add("projectReturnButtonIn");                                                                                
 }        
-//--- close detailed project view --- 
-async function closeProjectView() {
-    //--- animations for closing project view ---
-    
-    closingProjectView();
-
-    waitForAnimation(showcaseNavigation, "showcaseSidebarIn");
-    document.querySelector("#project" + activeShowcaseNumber).classList.add("displayNone");
-    projectBox.classList.add("displayNone");
-
-    await delay(200);
-    showcaseTitle.classList.add("showcaseTitleDeco");
-
-    //await delay(900);
-    showcaseTitle.querySelectorAll("p").forEach((element) => {
-        element.classList.remove("displayNone");
+//--- animation closing project view --- 
+async function closingProjectView() {  
+    projectReturnButton.classList.remove("projectReturnButtonIn");
+    waitForAnimation(showcaseBox, "projectClosing", true).then(() => {
+        showcaseBox.classList.remove("projectOpening");
     });
-
-    //await delay(500);
-    await delay(500);
+    await waitForAnimation(activeProject, "projectBoxOut", true).then(() => {
+        activeProject.classList.remove("projectBoxIn");
+        activeProject.classList.remove("displayBlock");
+    });  
+    projectBox.classList.add("displayNone");
     showcaseContent.classList.remove("projectView");
     projectViewState = false;
-    //--- enable switching of showcase frames ---
-    showcaseAnimationState = false; 
-    eventListenerShowcaseNavigationOn();
-}
-//--- animation closing project view --- 
-async function closingProjectView() {                        
-    showcaseFrame.classList.remove("showcaseGreyFilterRemove");
-    projectReturnButton.classList.add("projectReturnButtonOut");
-    projectBox.classList.replace("projectBoxIn", "projectBoxOut");
-    showcaseBox.classList.replace("projectOpening", "projectClosing"); 
-    await delay(200);
-    showcaseBackToStartButton.classList.remove("displayNone");     
-    projectReturnButton.classList.add("displayNone");
-    projectBox.classList.remove("projectBoxOut");
-
-    await delay(200);   
-    //--- header animation 04 ---
-    header.classList.remove("headerOut");
-
-    await delay(200);
-    //--- remove used animation and DOM classes ---
-    showcaseBackToStartButton.classList.remove("opacityNone");
-    showcaseNavigation.classList.remove("showcaseSidebarOut"); 
-    projectReturnButton.classList.remove("projectReturnButtonOut");
-    showcaseBox.classList.remove("projectClosing");
 }
 //#endregion 
+
+
+
+

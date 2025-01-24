@@ -11,7 +11,7 @@ export function handleClickOutside(event, elementToExclude, callback) {
     document.addEventListener("click", listener);
 }
 //--- resolve promise when animation ends on element and pot add animation class and delete it afterwards ---
-export function waitForAnimation(element, animationClass = null, removeAnimationClassAfterwards = false, callback = null) {
+export function waitForAnimation(element, animationClass = null, removeAnimationClassAfterwards = false) {
     return new Promise((resolve) => {
         if (animationClass) {
             element.classList.add(animationClass);
@@ -23,9 +23,22 @@ export function waitForAnimation(element, animationClass = null, removeAnimation
                 element.classList.remove(animationClass);
             }
             resolve();
-            if (callback && typeof callback === 'function') {
-                callback();
+        });
+    });
+}
+//--- same but for transistion ---
+export function waitForTransition(element, transitionClass = null, removeTransitionClassAfterwards = false) {
+    return new Promise((resolve) => {
+        if (transitionClass) {
+            element.classList.add(transitionClass);
+        }
+        //--- event listener to resolve once transition ends ---
+        element.addEventListener('transitionend', function handler() {
+            element.removeEventListener('transitionend', handler);
+            if (transitionClass && removeTransitionClassAfterwards) {
+                element.classList.remove(transitionClass);
             }
+            resolve();
         });
     });
 }

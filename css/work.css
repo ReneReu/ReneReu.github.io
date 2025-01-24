@@ -63,10 +63,6 @@ in detail */
 .showcaseTitle li {
     display: none;
 }
-/* --- Work Showcase Grey filter --- */
-.showcaseGreyFilterRemove {
-    filter: grayscale(0%);
-}
 /*#endregion*/
 
 /* --- Animations showcase change frames--- */
@@ -131,24 +127,13 @@ in detail */
     align-items: center; 
 }
 .showcaseSidebar {
-    display: none;
     width: 100%;    
-    margin-top: 50px;
+    margin-top: var(--headerBot-height);
+    transform: translateX(-110%);
+    transition: transform 0.8s ease;
 }
-/* ---  Showcase shortcut sidebar animations --- */
 .showcaseSidebarIn {
-    animation: animSCSidebarIn 0.8s forwards;
-}
-@keyframes animSCSidebarIn {
-    0% {left: -100%;}
-    100% {left: 0%;}
-}
-.showcaseSidebarOut {
-    animation: animSCSidebarOut 0.8s forwards;
-}
-@keyframes animSCSidebarOut {
-    0% {left: 0%;}
-    100% {left: -10%;}
+    transform: translateX(0);
 }
 /* ---  Showcase shortcut sidebar buttons --- */
 .showcaseSidebarButton {
@@ -173,19 +158,14 @@ in detail */
     height: 80%;
     padding-right: 10%;
     position: relative;
-    display: none;
-    left: -100%;
+    transform: translateX(-110%);
+    transition: transform 0.8s ease;
 }
 .showcaseSidebarButtonActive {
     background-color: var(--color-dark2);
 }
-/* ---  Showcase shortcut sidebar button animations --- */
 .showcaseSidebarButtonDesignLoad {
-    animation: animSCSidebarButtonLoad 0.8s forwards;
-}
-@keyframes animSCSidebarButtonLoad {
-    0% {left: -100%;}
-    100% {left: 0%;}
+    transform: translateX(0);
 }
 /*#endregion*/
 
@@ -196,7 +176,7 @@ in detail */
     animation: animPrViOpen 0.8s forwards;
 }
 @keyframes animPrViOpen {
-    0% {height: 80%; width: 80%;}
+    0% {height: 70%; width: 80%;}
     40% {height: 40%; width: 40%;}
     100% {height: 100%; width: 100%;}
 }
@@ -206,7 +186,7 @@ in detail */
 @keyframes animPrViClose {
     0% {height: 100%; width: 100%;}
     60% {height: 40%; width: 40%;}
-    100% {height: 80%; width: 80%;}
+    100% {height: 70%; width: 80%;}
 }
 /* --- project view --- hide classes from showcase view --- */
 .projectView {
@@ -218,7 +198,7 @@ in detail */
     display: none;
 }
 .projectView .showcaseBox {
-    position: fixed !important;
+    position: fixed;
     align-self: center;
     align-items: initial;
     padding-top: 0;   
@@ -234,26 +214,16 @@ in detail */
 .projectReturnButton {
     z-index: 90;
     position: fixed;
-    top: 0%;
     left: 2%;    
     height: 50px;
     width: 50px;
     background-color: rgba(41, 40, 40, 0.5);    
     cursor: pointer;
+    transform: translateY(-100%);
+    transition: transform 0.8s ease;  
 }
 .projectReturnButtonIn {
-    animation: animPrViReturnButtonIn 0.8s forwards;
-}
-@keyframes animPrViReturnButtonIn {
-    0% {top: -100%;}
-    100% {top: 0%;}
-}
-.projectReturnButtonOut {
-    animation: animPrViReturnButtonOut 1.2s forwards;
-}
-@keyframes animPrViReturnButtonOut {
-    0% {top: 0%;}
-    100% {top: -100%;}
+    transform: translateY(0);
 }
 /*#endregion*/
 
@@ -261,6 +231,9 @@ in detail */
 /*#region*/
 /* --- project box contains viewport sized panels with various media detailing the project  --- */
 .projectBox { 
+    width: 100%;
+}
+.projectBoxPanelContainer { 
     height: 75%;
     width: 100%;
     color: var(--color-dark2);
@@ -269,7 +242,7 @@ in detail */
     top: 100%;
     
     position: relative;
-    display: block;
+    display: none;
 }
 .projectBoxIn {
     animation: animPrBoxIn  0.8s forwards;
@@ -299,6 +272,8 @@ in detail */
     position: fixed;
     bottom: 2vh;
     right: 2vw;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 /*#endregion*/
 

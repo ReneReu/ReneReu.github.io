@@ -106,7 +106,7 @@
                 </div>                
             </nav>
             
-            <div class="showcaseBox">
+            <section class="showcaseBox">
                 <div class="showcaseFrame"
                     data-pic0="url('../img/w10.avif')" data-desc0="bla"
                     data-pic1="url('../img/w20.avif')" data-desc1="blabla"
@@ -122,48 +122,44 @@
                         <li>Work 5</li>
                     </ul>                
                 </div>            
-            </div>            
-
+            </section>    
+            
             <section class="projectBox displayNone">
+                <!-- edit anim on article instead of projextBox-->        
+                <button class="projectReturnButton" aria-label="Back to Showcase menu"></button>
 
-                <button class="projectReturnButton displayNone" aria-label="Back to Showcase menu"></button>
-
-                <article id="project0" class="displayNone">
+                <article id="project0" class="projectBoxPanelContainer">
                     
                     <header class="projectBoxInfo">
-                        <p>Location: Siem Reap, Kambodia</p>
+                        <h3>Location: Siem Reap, Kambodia</h3>
                     </header>
                   
-                    <div class="projectBoxPanelContainer">
+                    <figure class="projectBoxPanel">
+                        <img class="imgCoverDiv" src="img/w11.avif" alt="Image of Siem Reap">
+                    </figure>
 
-                        <figure class="projectBoxPanel">
-                            <img class="imgCoverDiv" src="img/w11.avif" alt="Image of Siem Reap">
-                        </figure>
+                    <figure class="projectBoxPanel">
+                        <video autoplay muted loop preload="auto">
+                            <source src="img/test.mp4" type="video/mp4">
+                            HTML5 Video not supported by Browser
+                        </video>                            
+                        <figcaption>cool view</figcaption>                            
+                    </figure>
 
-                        <figure class="projectBoxPanel">
-                            <video autoplay muted loop preload="auto">
-                                <source src="img/test.mp4" type="video/mp4">
-                                HTML5 Video not supported by Browser
-                            </video>                            
-                            <figcaption>cool view</figcaption>                            
-                        </figure>
+                    <figure class="projectBoxPanel">
+                        <img src="img/w12.avif" alt="Image of Siem Reap">
+                    </figure>
 
-                        <figure class="projectBoxPanel">
-                            <img src="img/w12.avif" alt="Image of Siem Reap">
-                        </figure>
+                    <figure class="projectBoxPanel"></figure>
 
-                        <figure class="projectBoxPanel"></figure>
+                    <figure class="projectBoxPanel">
+                        <img src="img/w13.avif" alt="Image of Siem Reap">
+                    </figure>
 
-                        <figure class="projectBoxPanel">
-                            <img src="img/w13.avif" alt="Image of Siem Reap">
-                        </figure>
-
-                        <div class="projectBoxPanelEnd"></div>
-
-                    </div>                    
+                    <div class="projectBoxPanelEnd"></div>                 
                 </article>
 
-                <article id="project1" class="displayNone">
+                <article id="project1" class="projectBoxPanelContainer">
                     <header class="projectBoxInfo">
                         <p>Location: Cloud City</p>
                     </header>
@@ -172,21 +168,21 @@
                     </div>
                 </article>
 
-                <article id="project2" class="displayNone">
+                <article id="project2" class="projectBoxPanelContainer">
                     <header class="projectBoxInfo">
                         <p>Location: Siem Reap, Kambodia</p>
                     </header>
                     <div class="projectBoxPanelContainer"></div>
                 </article>
 
-                <article id="project3" class="displayNone">
+                <article id="project3" class="projectBoxPanelContainer">
                     <header class="projectBoxInfo">
                         <p>Location: Siem Reap, Kambodia</p>
                     </header>
                     <div class="projectBoxPanelContainer"></div>
                 </article>
 
-                <article id="project4" class="displayNone">
+                <article id="project4" class="projectBoxPanelContainer">
                     <header class="projectBoxInfo">    
                         <p>Location: Siem Reap, Kambodia</p>
                         <a href="thing.html">Web-App</a>

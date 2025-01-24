@@ -55,6 +55,10 @@ a {
 }
 .opacityNone {
     opacity: 0 !important;
+    pointer-events: none;
+}
+.imgFilterNone {
+    filter: none !important;
 }
 /* --- switch button text --- */
 .switchButtonIcon p:nth-child(1){
