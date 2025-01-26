@@ -1,6 +1,6 @@
 //--- Showcase Work presentation ---
 
-import {waitForAnimation, waitForTransition, delay, elementViewportObserver} from './utils.js'; 
+import {waitForAnimation, waitForTransition, delay, elementViewportObserver, waitForScrollTop} from './utils.js'; 
 
 //--- frequently used DOM elements ---
 const showcaseContent = document.querySelector(".showcaseContent");
@@ -252,10 +252,8 @@ async function disableProjectView() {
         if (scrollAmount === 0) {
             closeProjectView();
         } else {
-            //TODO instead duration check scrollTop==0
-            const animationDuration = 500 + (scrollAmount * 0.15);
             projectView.scrollTo({ top: 0, behavior: "smooth" });
-            await delay(animationDuration);
+            await waitForScrollTop(projectView);
             closeProjectView();   
         }
         projectReturnButton.removeEventListener("click", disableProjectView);

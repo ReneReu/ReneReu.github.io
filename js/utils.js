@@ -45,7 +45,7 @@ export function waitForTransition(element, transitionClass = null, removeTransit
 export function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-//--- check if triggerElement is in viewport and callback on targerElement
+//--- check if triggerElement is in viewport and callback on targerElement ---
 export function elementViewportObserver(targetElement, triggerElement, transformClass) {
     const observer = new IntersectionObserver(
         (entries) => {
@@ -65,4 +65,15 @@ export function elementViewportObserver(targetElement, triggerElement, transform
     observer.observe(triggerElement);
     //--- cleanup on empty call ---
     return () => observer.disconnect();
+}
+//--- check if element is scrolled to top every 50ms and resolve ---
+export function waitForScrollTop(element) {
+    return new Promise((resolve) => {
+        const checkScroll = setInterval(() => {
+            if (element.scrollTop === 0) {
+                clearInterval(checkScroll);
+                resolve();
+            }
+        }, 50);
+    });
 }
