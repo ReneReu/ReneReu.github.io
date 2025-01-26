@@ -65,7 +65,7 @@ function updateHeader(targetView) {
 async function navigateTo(targetView) {
     if (activeView !== targetView && !showcaseAnimationState) {
         const transitionFunction = transitionFunctions[activeView]?.[targetView];
-        if (transitionFunction) { // Calls the function if it exists
+        if (transitionFunction) {
             transitionFunction(); 
             updateHeader(targetView);
         } else {

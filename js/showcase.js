@@ -1,17 +1,16 @@
 //--- Showcase Work presentation ---
 
-import {waitForAnimation, waitForTransition, delay, smoothScrollToElement} from './utils.js'; 
+import {waitForAnimation, waitForTransition, delay, elementViewportObserver} from './utils.js'; 
 
 //--- frequently used DOM elements ---
 const showcaseContent = document.querySelector(".showcaseContent");
-const showcaseTitle = document.querySelector(".showcaseTitle");
-const showcaseFrame = document.querySelector(".showcaseFrame");
-const showcaseBox = document.querySelector(".showcaseBox");
-const showcaseNavigation = document.querySelector(".showcaseNavigation");
-const showcaseSidebar = document.querySelector(".showcaseSidebar");
-const showcaseSidebarButtons = document.querySelectorAll(".showcaseSidebarButton");
-const showcaseSidebarButtonDesign = document.querySelectorAll(".showcaseSidebarButtonDesign");
-const showcaseBackToStartButton = document.querySelector(".showcaseBackToStartButton");
+const showcaseBox = showcaseContent.querySelector(".showcaseBox");
+const showcaseFrame = showcaseBox.querySelector(".showcaseFrame");
+const showcaseTitle = showcaseBox.querySelector(".showcaseTitle");
+const showcaseBackToStartButton = showcaseContent.querySelector(".showcaseBackToStartButton");
+const showcaseSidebar = showcaseContent.querySelector(".showcaseSidebar");
+const showcaseSidebarButtons = showcaseSidebar.querySelectorAll(".showcaseSidebarButton");
+const showcaseSidebarButtonDesign = showcaseSidebar.querySelectorAll(".showcaseSidebarButtonDesign");
 
 const showcaseItems = 4; //0 to 4
 let activeShowcaseNumber = -1;
@@ -222,13 +221,14 @@ export let showcaseAnimationState = false;
 
 //--- interface showcase frame and detailed project view --- 
 //#region
-const projectView = document.querySelector(".projectView");
-const projectBox = document.querySelector(".projectBox");
-const projectReturnButton = document.querySelector(".projectReturnButton");
 const header = document.querySelector(".header");
+const projectBox = document.querySelector(".projectBox");
+const projectReturnButton = projectBox.querySelector(".projectReturnButton");
 
 let projectViewState = false;
 let activeProject;
+let projectBoxInfo;
+let projectBoxEnd;
 
 function enableProjectView() {
     if (!showcaseAnimationState && !projectViewState) {
@@ -265,15 +265,13 @@ async function disableProjectView() {
         eventListenerShowcaseNavigationOn();
     }      
 };
-
 //--- open detailed project view --- 
 function expandProjectView() {
     showcaseSidebar.classList.remove("showcaseSidebarIn");
-    showcaseBackToStartButton.classList.add("opacityNone"); //add smooth transition
+    showcaseBackToStartButton.classList.add("opacityNone");
     header.classList.add("headerOut");   
-    showcaseTitle.classList.add("opacityNone"); //smoother?
+    showcaseTitle.classList.add("opacityNone");
     showcaseFrame.classList.add("imgFilterNone");
-
     expandingProjectView();           
 }
 //--- close detailed project view --- 
@@ -283,36 +281,38 @@ function closeProjectView() {
     header.classList.remove("headerOut");
     showcaseTitle.classList.remove("opacityNone");
     showcaseFrame.classList.remove("imgFilterNone");
-
     closingProjectView();
 }
+let scrolledToEndObserver;
 //--- animation opening project view --- 
 async function expandingProjectView() {
     projectBox.classList.remove("displayNone");
     showcaseContent.classList.add("projectView");
     projectViewState = true;
- 
-    activeProject.classList.add("displayBlock");
-    activeProject.classList.add("projectBoxIn");
-    await waitForAnimation(showcaseBox, "projectOpening"); //forwards?
-    projectReturnButton.classList.add("projectReturnButtonIn");                                                                                
+    //--- animations ---
+    activeProject.classList.add("projectBoxIn", "displayBlock");   
+    await waitForAnimation(showcaseBox, "projectOpening", true);
+    projectReturnButton.classList.add("projectReturnButtonIn");
+    //--- add observer for projectBoxEnd to remove info about scrolling ---
+    projectBoxInfo = activeProject.querySelector(".projectBoxInfo");
+    projectBoxEnd = activeProject.querySelector(".projectBoxPanelEnd");
+    scrolledToEndObserver = elementViewportObserver(projectBoxInfo, projectBoxEnd, "opacityNone");
 }        
 //--- animation closing project view --- 
-async function closingProjectView() {  
+async function closingProjectView() {
+    //--- remove observer ---
+    if (scrolledToEndObserver) {
+        scrolledToEndObserver();
+        scrolledToEndObserver = null;
+    }
+    //--- animations ---
     projectReturnButton.classList.remove("projectReturnButtonIn");
-    waitForAnimation(showcaseBox, "projectClosing", true).then(() => {
-        showcaseBox.classList.remove("projectOpening");
-    });
-    await waitForAnimation(activeProject, "projectBoxOut", true).then(() => {
-        activeProject.classList.remove("projectBoxIn");
-        activeProject.classList.remove("displayBlock");
-    });  
+    waitForAnimation(showcaseBox, "projectClosing", true);
+    await waitForAnimation(activeProject, "projectBoxOut", true)
+    activeProject.classList.remove("projectBoxIn", "displayBlock");
+
     projectBox.classList.add("displayNone");
     showcaseContent.classList.remove("projectView");
     projectViewState = false;
 }
-//#endregion 
-
-
-
-
+//#endregion

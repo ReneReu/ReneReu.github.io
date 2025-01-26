@@ -54,7 +54,7 @@ in detail */
     font-size: 50px;    
     display: block;
     background-color: rgba(41, 40, 40, 0.5);
-    transition: all 1.5s ease, padding 1ms, opacity 0.25s; 
+    transition: all 1s ease, padding 1ms, opacity 0.25s; 
 }
 /*padding separated to prevent flickering animation */
 .showcaseTitleDeco {
@@ -198,6 +198,7 @@ in detail */
     display: none;
 }
 .projectView .showcaseBox {
+    width: 100%;
     position: fixed;
     align-self: center;
     align-items: initial;
@@ -306,7 +307,7 @@ in detail */
     background-color: #757575;
 }
 .projectBoxPanelEnd {
-    height: 30vh;
+    height: 10vh;
     background-color: red;
 }
 /*#endregion*/

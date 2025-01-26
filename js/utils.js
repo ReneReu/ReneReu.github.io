@@ -45,31 +45,24 @@ export function waitForTransition(element, transitionClass = null, removeTransit
 export function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-export function smoothScrollToElement(element, endY, duration) {
-    const startY = element.scrollTop;
-    const distanceY = endY - startY;
-    const startTime = new Date().getTime();
-    console.log("util: "+startY+" "+distanceY);
-
-    duration = typeof duration !== 'undefined' ? duration : 400;
-
-    const easeInOutQuad = (t, b, c, d) => {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-    };
-
-    const animateScroll = () => {
-        const currentTime = new Date().getTime() - startTime;
-        const newY = easeInOutQuad(currentTime, startY, distanceY, duration);
-        element.scrollTop = newY;
-
-        if (currentTime < duration) {
-            requestAnimationFrame(animateScroll);
-        } else {
-            element.scrollTop = endY;
+//--- check if triggerElement is in viewport and callback on targerElement
+export function elementViewportObserver(targetElement, triggerElement, transformClass) {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    targetElement.classList.add(transformClass);
+                } else {
+                    targetElement.classList.remove(transformClass);
+                }
+            });
+        },
+        {
+            root: null, // viewport
+            threshold: 0.5, // trigger on 50% visible
         }
-    };
-    animateScroll();
+    );
+    observer.observe(triggerElement);
+    //--- cleanup on empty call ---
+    return () => observer.disconnect();
 }
