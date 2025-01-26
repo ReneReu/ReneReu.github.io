@@ -235,15 +235,14 @@ in detail */
     width: 100%;
 }
 .projectBoxPanelContainer { 
-    height: 75%;
-    width: 100%;
     color: var(--color-dark2);
     font-weight: 100;
     font-size: 18px;
     top: 100%;
-    
     position: relative;
     display: none;
+    margin-top: -70vh;
+    padding-top: 70vh;
 }
 .projectBoxIn {
     animation: animPrBoxIn  0.8s forwards;
@@ -262,7 +261,6 @@ in detail */
 }
 /* --- project summary/keynotes on top of project box --- */
 .projectBoxInfo {
-    width: 100%;
     margin-top: 70vh;
     height: 30vh;
     background-color:  var(--color-dark2);
