@@ -2,22 +2,27 @@
 <html lang="en">
 
 <head>
-	<title>Rene Reufels - Portfolio</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=5, user-scalable=yes"/>
-    <meta name="description" content="Webdesign | Photography | Art | Machine Learning"/>
     
-	<link href="css/lib/reset.css" media="screen" rel="stylesheet">
+    <title>Rene Reufels - Portfolio</title>
+    <meta name="description" content="Webdesign | Photography | Art | Machine Learning"/>
+    <meta name="keywords" content="Web Design Portfolio, UI/UX designer, responsive web design, freelance web designer, creative websites, HTML, CSS, JavaScript, modern web design, graphic design, branding, art, small business websites, web applications">
+    <meta name="author" content="Rene Reufels">
 
-	<link href="css/styles.css" media="screen" rel="stylesheet">    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+	<link href="css/lib/reset.css" media="screen" rel="stylesheet">
+	<link href="css/styles.css" media="screen" rel="stylesheet">
+  
     <link href="css/loading.css" media="screen" rel="stylesheet">
     <link href="css/header.css" media="screen" rel="stylesheet">   
 
     <link href="css/wq/wavequill.css" media="screen" rel="stylesheet"> 
     
-	<script src="js/lib/jquery-3.7.1.min.js"></script>
     <script src="js/wq/konva.min.js"></script>
 
+    <script src="js/loading.js" type="module"></script>
     <script  src="js/wq/wavequill.js" type="module"></script>
 </head>
 
@@ -39,44 +44,23 @@
     
 	<!-- Header -->
 	<header class="header">
-        <div class="headerTop">
+        <h1 class="headerTop">
             <div class="logo">
                 <a href="index.html" title="Portfolio">
                     <img class="logoImg" src="img/wq/waveQuill.svg" alt="logo">
                 </a>         
-                <a class="logoName" href="index.html">
-                    <h1>Wavequill</h1> 
-                </a>
+                <a class="logoName" href="index.html">Wavequill</a>
             </div>
-            <p class="slogan">Wavequill</p>
-        </div>
+            <p class="slogan">Creative Web Design</p>
+        </h1>
     </header>
     
     <main class="content">
         <!-- content of the sub page -->
         <section>
+
         </section>
     </main>
-    
-    
-    <script>
-        $(window).on("load", loaded);
-
-        /* --- loading completed --- */       
-        function loaded() {
-            const loadingTime = 1000;             
-            setTimeout(function(){
-                $(".loadingScreen").addClass("loadedAnimation");   
-                $(".loadingScreen").on("animationend", function() {
-                    setTimeout(function() {
-                        $(".loadingScreen").css("will-change", "auto");
-                        $(".loadingScreen").hide();
-                    }, loadingTime);
-                });    
-            }, loadingTime);            
-        }
-    </script>
-
 </body>   
 
 </html>

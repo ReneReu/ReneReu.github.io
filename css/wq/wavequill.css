@@ -1,15 +1,11 @@
 .content {
   z-index: 10;
-  top: 100px;
+  top: var(--headerTop-height);
   position:absolute;    
   background-color: #EDEDED;
   color: #292828;
   font-weight: 100;    
+  overflow-y: scroll;
   overflow: hidden;
-}
-
-@media screen and (max-width: 800px) {
-  .content {
-    top: 150px;
-  }
+  width: 100%;
 }
