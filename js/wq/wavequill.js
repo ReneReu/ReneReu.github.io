@@ -1,5 +1,1 @@
-function mainFunction() {
-    
-
-}
-
+function mainFunction() {}

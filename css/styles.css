@@ -30,7 +30,7 @@ html, body {
     box-sizing: border-box;
     scroll-behavior: smooth;
     overflow: hidden;
-    background-color: black;    
+    background-color: #EDEDED;    
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     scrollbar-width: none;
