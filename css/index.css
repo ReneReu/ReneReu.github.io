@@ -1,15 +1,4 @@
 /* CSS for the landing page */
-.content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    background-color: var(--color-primary);
-    color: var(--color-dark2);
-    font-weight: 100;   
-}
 /* --- Content for start zone --- */
 .startContent {
     width: 100%;
