@@ -154,7 +154,6 @@ in detail */
 .showcaseSidebarButtonDesign {
     background-color: rgba(0, 0, 0, 0);
     border: var(--border-style2);
-    border-left: none;  
     width: 90%;
     height: 80%;
     padding-right: 10%;

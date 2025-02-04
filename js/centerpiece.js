@@ -1,22 +1,31 @@
 import {delay} from './utils.js'
 
-let scene, camera, renderer;
-//--- clock for framerate independent speed ---
-const clock = new THREE.Clock();
+// --- consts ---
+const NUM_PARTICLES = 140;
+const MAX_SPEED = 0.033;
+const MAX_DELTA = 0.05; // limit delta to avoid large jumps
 
+// --- swirl ---
+const MAX_RADIUS = 0.7;
+const SWIRL_STRENGTH = 0.0022;
+const SWIRL_NOISE_STRENGTH = 0.001;
+const AVOID_RADIUS = 0.3;
+
+// --- comet ---
+const MAX_HISTORY = 150; // max history -> trail length
+const TRAIL_SPACING = 0.5;
+const DISTRIBUTION_EXPONENT = 7.5; // particle distribution >1 -> more particles in front
+const SEEK_STRENGTH = 0.006;
+const COMET_NOISE_STRENGTH = 0.004;
+const DAMPING_FACTOR = 0.93;
+
+
+const clock = new THREE.Clock();
 const particles = [];
 const velocities = [];
-
-const NUM_PARTICLES = 140;
-const MAX__RADIUS = 0.7;
-//--- max history -> trail length ---
-const MAX_HISTORY = 150;   
-const TRAIL_SPACING = 0.5;
-//--- particle distribution -> >1 -> more particles in front ---
-let distributionExponent = 7.5;
-
-let cometMode = false;
+let scene, camera, renderer;
 let mouseHistory = [];
+let cometMode = false;
 
 // --- Raycasting for correct mouse position ---
 const raycaster = new THREE.Raycaster();
@@ -27,13 +36,22 @@ const mousePos = new THREE.Vector3();
 const centerpieceDiv = document.querySelector(".centerPiece");
 
 export function eventHandlerCenterPieceOn() {
-    window.addEventListener("pointermove", onPointerMove, false);
-    window.addEventListener("resize", onWindowResize, false);
-    window.addEventListener("pointerover", onPointerOver, false);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerover', onPointerOver);
+    window.addEventListener('resize', onWindowResize);
 }
 export function eventHandlerCenterPieceOff() {
-    window.removeEventListener("pointermove", onPointerMove, false);
-    window.removeEventListener("resize", onWindowResize, false);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerover', onPointerOver);
+    window.removeEventListener('resize', onWindowResize);
+    cometMode = false;
+}
+function onWindowResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
 }
 function onPointerMove(event) {
     // --- centerPiece bounding ---
@@ -41,20 +59,10 @@ function onPointerMove(event) {
     // --- mouse positions relative to centerPiece ---
     mouseNDC.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouseNDC.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
     // --- raycast from camera to z=0 plane intersection -> mousePos ---
     raycaster.setFromCamera(mouseNDC, camera);
     const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     raycaster.ray.intersectPlane(planeZ, mousePos);
-    // --- default mouse position ---
-    if (!mousePos) {
-        mousePos.set(0, 0, 0);
-    }
-}
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
 }
 function init() {
     // --- setup scene and camera ---
@@ -86,16 +94,14 @@ function init() {
         velocities.push(velocity);
         scene.add(mesh);
     }
-    eventHandlerCenterPieceOn()
+    eventHandlerCenterPieceOn();
+    animate();
 }
 function animate() {
     requestAnimationFrame(animate);
     // --- frame independant speed -> time elapsed since last frame ---
     const deltaTime = clock.getDelta();
-    // --- limit delta to avoid large jumps
-    const maxDelta = 0.05;
-    const normalizedDelta = Math.min(deltaTime, maxDelta);
-
+    const normalizedDelta = Math.min(deltaTime, MAX_DELTA);
     // --- mouseHistory with mouse pos for comet trail and length---
     mouseHistory.push(mousePos.clone());
     if (mouseHistory.length > MAX_HISTORY) {
@@ -111,26 +117,23 @@ function animate() {
         //--- default circle mode ---
             // --- swirl around center ---
             const toCenter = center.clone().sub(mesh.position);
-            const swirlStrength = 0.0022;
-            const swirlForce = new THREE.Vector3(-toCenter.y, toCenter.x, 0).multiplyScalar(swirlStrength);
+            const swirlForce = new THREE.Vector3(-toCenter.y, toCenter.x, 0).multiplyScalar(SWIRL_STRENGTH);
             const distFromCenter = mesh.position.length();
             // --- keep particle from flying away -> pull back ---
             velocity.add(swirlForce);            
-            if (distFromCenter > MAX__RADIUS) {
-                const pullBackStrength = 0.005 * (distFromCenter - MAX__RADIUS + 1);
+            if (distFromCenter > MAX_RADIUS) {
+                const pullBackStrength = 0.005 * (distFromCenter - MAX_RADIUS + 1);
                 const pullForce = center.clone().sub(mesh.position).multiplyScalar(pullBackStrength);
                 velocity.add(pullForce);
             }
-            // --- movement noise ---
-            const noiseStrength = 0.001;
-            velocity.x += (Math.random() - 0.5) * noiseStrength;
-            velocity.y += (Math.random() - 0.5) * noiseStrength;
-            velocity.z += (Math.random() - 0.5) * noiseStrength;
+            // --- movement noise ---            
+            velocity.x += (Math.random() - 0.5) * SWIRL_NOISE_STRENGTH;
+            velocity.y += (Math.random() - 0.5) * SWIRL_NOISE_STRENGTH;
+            velocity.z += (Math.random() - 0.5) * SWIRL_NOISE_STRENGTH;
             // --- particles avoid mouse pos ---
             const toMouse = mesh.position.clone().sub(mousePos);
-            const distanceToMouse = toMouse.length();
-            const avoidRadius = 0.3;
-            if (distanceToMouse < avoidRadius) {
+            const distanceToMouse = toMouse.length();            
+            if (distanceToMouse < AVOID_RADIUS) {
                 const avoidForceStrength = 0.01;
                 const avoidForce = toMouse.normalize().multiplyScalar(avoidForceStrength);
                 velocity.add(avoidForce);
@@ -138,36 +141,32 @@ function animate() {
         } else {
         // --- comet trail mode ---
             // --- damp trail movements ---
-            const dampingFactor = 0.93;
-            velocity.multiplyScalar(dampingFactor);
+            velocity.multiplyScalar(DAMPING_FACTOR);
             // --- more particles near the front ---
             const iNormalized = i / (NUM_PARTICLES - 1);
-            const offset = Math.floor(TRAIL_SPACING * (mouseHistory.length - 1) * Math.pow(iNormalized, distributionExponent));
+            const offset = Math.floor(TRAIL_SPACING * (mouseHistory.length - 1) * Math.pow(iNormalized, DISTRIBUTION_EXPONENT));
             let targetIndex = mouseHistory.length - 1 - offset;
             if (targetIndex < 0) targetIndex = 0;
             const targetPos = mouseHistory[targetIndex] || mousePos;
-            // --- seek target mouse ---
-            const seekStrength = 0.006;
+            // --- seek target mouse ---       
             const toTarget = targetPos.clone().sub(mesh.position);
-            velocity.add(toTarget.multiplyScalar(seekStrength));
-            // --- add movement noise ---
-            const noiseStrength = 0.004;
-            velocity.x += (Math.random() - 0.5) * noiseStrength;
-            velocity.y += (Math.random() - 0.5) * noiseStrength;
-            velocity.z += (Math.random() - 0.5) * noiseStrength;
+            velocity.add(toTarget.multiplyScalar(SEEK_STRENGTH));
+            // --- add movement noise ---            
+            velocity.x += (Math.random() - 0.5) * COMET_NOISE_STRENGTH;
+            velocity.y += (Math.random() - 0.5) * COMET_NOISE_STRENGTH;
+            velocity.z += (Math.random() - 0.5) * COMET_NOISE_STRENGTH;
             // --- keep them from going away too far ---
             const distFromCenter = mesh.position.length();
-            if (distFromCenter > MAX__RADIUS * 2) {
-                const pullBackStrength = 0.0002 * (distFromCenter - MAX__RADIUS + 1);
+            if (distFromCenter > MAX_RADIUS * 2) {
+                const pullBackStrength = 0.0002 * (distFromCenter - MAX_RADIUS + 1);
                 const pullForce = center.clone().sub(mesh.position).multiplyScalar(pullBackStrength);
                 velocity.add(pullForce);
             }
         }
         // --- move particles and limit speed ---
         mesh.position.addScaledVector(velocity, normalizedDelta * 60);
-        const maxSpeed = 0.033;
-        if (velocity.length() > maxSpeed) {
-            velocity.setLength(maxSpeed);
+        if (velocity.length() > MAX_SPEED) {
+            velocity.setLength(MAX_SPEED);
         }
     }
     renderer.render(scene, camera);
@@ -177,10 +176,7 @@ async function onPointerOver(event) {
     const navZoneElement = event.target.closest('[data-nav-zone]');
     if (navZoneElement) {
         cometMode = true;
-    } else {
-        await delay(3000);
-        cometMode = false;
     }
 }
+
 init();
-animate();
