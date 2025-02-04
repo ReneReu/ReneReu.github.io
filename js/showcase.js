@@ -1,6 +1,6 @@
 //--- Showcase Work presentation ---
 
-import {waitForAnimation, elementViewportObserver, waitForScrollTop} from './utils.js'; 
+import {waitForAnimation, elementViewportObserver, waitForScrollTop} from "./utils.js"; 
 
 //--- frequently used DOM elements ---
 const showcaseContent = document.querySelector(".showcaseContent");

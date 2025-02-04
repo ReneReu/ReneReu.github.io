@@ -1,4 +1,4 @@
-import {delay} from './utils.js'
+import {delay} from "./utils.js"
 
 // --- consts ---
 const NUM_PARTICLES = 140;
@@ -19,7 +19,6 @@ const SEEK_STRENGTH = 0.006;
 const COMET_NOISE_STRENGTH = 0.004;
 const DAMPING_FACTOR = 0.93;
 
-
 const clock = new THREE.Clock();
 const particles = [];
 const velocities = [];
@@ -36,14 +35,14 @@ const mousePos = new THREE.Vector3();
 const centerpieceDiv = document.querySelector(".centerPiece");
 
 export function eventHandlerCenterPieceOn() {
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerover', onPointerOver);
-    window.addEventListener('resize', onWindowResize);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerover", onPointerOver);
+    window.addEventListener("resize", onWindowResize);
 }
 export function eventHandlerCenterPieceOff() {
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerover', onPointerOver);
-    window.removeEventListener('resize', onWindowResize);
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerover", onPointerOver);
+    window.removeEventListener("resize", onWindowResize);
     cometMode = false;
 }
 function onWindowResize() {

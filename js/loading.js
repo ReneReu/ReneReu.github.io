@@ -1,6 +1,6 @@
 //--- loading screen ---
 
-import {waitForAnimation, delay} from './utils.js'; 
+import {waitForAnimation, delay} from "./utils.js"; 
 
 window.addEventListener("load", loaded);
 

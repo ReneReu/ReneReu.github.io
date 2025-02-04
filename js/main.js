@@ -1,10 +1,10 @@
 //--- Navigation ---
 
-import {collapseMobileMenu} from './mobileMenu.js';
+import {collapseMobileMenu} from "./mobileMenu.js";
 //--- interface with other view sections of the website ---
-import {showcaseAnimationState, startShowcase, closeShowcase} from './showcase.js';
+import {showcaseAnimationState, startShowcase, closeShowcase} from "./showcase.js";
 //--- interface with centerpiece section ---
-import { eventHandlerCenterPieceOn, eventHandlerCenterPieceOff } from './centerpiece.js';
+import { eventHandlerCenterPieceOn, eventHandlerCenterPieceOff } from "./centerpiece.js";
 
 
 //--- Functions for switching between start and showcase view ---
