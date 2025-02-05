@@ -4,7 +4,7 @@ import {collapseMobileMenu} from "./mobileMenu.js";
 //--- interface with other view sections of the website ---
 import {showcaseAnimationState, startShowcase, closeShowcase} from "./showcase.js";
 //--- interface with centerpiece section ---
-import { eventHandlerCenterPieceOn, eventHandlerCenterPieceOff } from "./centerpiece.js";
+import { setupCenterpiece, closeCenterpiece } from "./centerpiece.js";
 
 
 //--- Functions for switching between start and showcase view ---
@@ -30,7 +30,7 @@ const transitionFunctions = {
 };
 function init (startFunction) {
     try {
-        eventHandlerCenterPieceOff();
+        closeCenterpiece();
         startContent.classList.add("displayNone");
         startFunction();
     } catch (e) {
@@ -41,7 +41,7 @@ async function wrapUp (closeFunction) {
     try {
         await closeFunction();
         startContent.classList.remove("displayNone");
-        eventHandlerCenterPieceOn();
+        setupCenterpiece();
     } catch (e) {
         console.error("Error in wrapUp:", e);
     } 

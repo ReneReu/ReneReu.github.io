@@ -1,12 +1,14 @@
 import {delay} from "./utils.js"
 
 // --- consts ---
-const NUM_PARTICLES = 140;
+const NUM_PARTICLES = 120;
+const NUM_PARTICLES_MOBILE = 80;
 const MAX_SPEED = 0.033;
 const MAX_DELTA = 0.05; // limit delta to avoid large jumps
 
 // --- swirl ---
-const MAX_RADIUS = 0.7;
+const MAX_RADIUS_DESKTOP = 0.7;
+const MAX_RADIUS_MOBILE = 0.5;
 const SWIRL_STRENGTH = 0.0022;
 const SWIRL_NOISE_STRENGTH = 0.001;
 const AVOID_RADIUS = 0.3;
@@ -23,8 +25,14 @@ const clock = new THREE.Clock();
 const particles = [];
 const velocities = [];
 let scene, camera, renderer;
+let isAnimating = true;
+
 let mouseHistory = [];
 let cometMode = false;
+let lastTouchTime = 0;
+
+let numParticles;
+let maxRadius;
 
 // --- Raycasting for correct mouse position ---
 const raycaster = new THREE.Raycaster();
@@ -34,16 +42,54 @@ const mousePos = new THREE.Vector3();
 
 const centerpieceDiv = document.querySelector(".centerPiece");
 
-export function eventHandlerCenterPieceOn() {
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("pointerover", onPointerOver);
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia("(max-width: 768px)").matches;
+}
+
+export function setupCenterpiece() {
+    cometMode = false;    
+    if (isMobile()) {
+        maxRadius = MAX_RADIUS_MOBILE;
+        removeDesktopListener();
+        addMobileListener();
+    } else {
+        maxRadius = MAX_RADIUS_DESKTOP;
+        removeMobileListener();
+        addDesktopListener();
+    }
+    if (!isAnimating) {
+        isAnimating = true;
+        animate();
+    }
+}
+export function closeCenterpiece() {
+    removeDesktopListener();
+    removeMobileListener();
+    isAnimating = false;
+}
+function addDesktopListener() {
+    window.addEventListener("pointermove", onPointerMove, { passive: true });    
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mouseup", onMouseUp);
     window.addEventListener("resize", onWindowResize);
 }
-export function eventHandlerCenterPieceOff() {
-    window.removeEventListener("pointermove", onPointerMove);
-    window.removeEventListener("pointerover", onPointerOver);
+function removeDesktopListener() {
+    window.removeEventListener("pointermove", onPointerMove); 
+    window.removeEventListener("mousedown", onMouseDown);
+    window.removeEventListener("mouseup", onMouseUp);
     window.removeEventListener("resize", onWindowResize);
-    cometMode = false;
+}
+function addMobileListener() {
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
+    window.addEventListener("resize", onWindowResize);
+}
+function removeMobileListener() {
+    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchend", onTouchEnd);
+    window.removeEventListener("resize", onWindowResize);
 }
 function onWindowResize() {
     const width = window.innerWidth;
@@ -51,6 +97,8 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
+    // --- in case desktop/mobile switch happened ---
+    setupCenterpiece();
 }
 function onPointerMove(event) {
     // --- centerPiece bounding ---
@@ -63,6 +111,44 @@ function onPointerMove(event) {
     const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     raycaster.ray.intersectPlane(planeZ, mousePos);
 }
+function onMouseDown(event) {
+    cometMode = true;
+}
+function onMouseUp(event) {
+    cometMode = false;
+}
+// --- touch control ---
+function onTouchStart(event) {
+    const currentTime = new Date().getTime();
+    const timeSinceLastTouch = currentTime - lastTouchTime;
+    // --- double tap to activate comet mode ---
+    if (timeSinceLastTouch < 300 && timeSinceLastTouch > 50) {
+        cometMode = true;
+    }
+    lastTouchTime = currentTime;
+    
+    updateMousePosition(event.touches[0].clientX, event.touches[0].clientY);
+}
+function onTouchMove(event) {
+    updateMousePosition(event.touches[0].clientX, event.touches[0].clientY);
+}
+function onTouchEnd() {
+    cometMode = false;
+    resetMousePosition();
+}
+function updateMousePosition(clientX, clientY) {
+    const rect = centerpieceDiv.getBoundingClientRect();
+    mouseNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouseNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouseNDC, camera);
+    const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    raycaster.ray.intersectPlane(planeZ, mousePos);
+}
+function resetMousePosition() {
+    mousePos.set(0, 0, 0);
+}
+
 function init() {
     // --- setup scene and camera ---
     scene = new THREE.Scene();
@@ -76,8 +162,13 @@ function init() {
     // --- setup particles with random inital pos and velocity ---
     const planeGeom = new THREE.PlaneGeometry(0.03, 0.03);
     const planeMat = new THREE.MeshBasicMaterial({ color: 0x292828, side: THREE.DoubleSide });
-
-    for (let i = 0; i < NUM_PARTICLES; i++) {
+    //
+    if (isMobile()) {
+        numParticles = NUM_PARTICLES_MOBILE;
+    } else {
+        numParticles = NUM_PARTICLES;
+    }
+    for (let i = 0; i < numParticles; i++) {
         const mesh = new THREE.Mesh(planeGeom, planeMat);
         mesh.position.set(
         (Math.random() - 0.5) * 1.4,
@@ -93,10 +184,11 @@ function init() {
         velocities.push(velocity);
         scene.add(mesh);
     }
-    eventHandlerCenterPieceOn();
+    setupCenterpiece();
     animate();
 }
 function animate() {
+    if (!isAnimating) return;
     requestAnimationFrame(animate);
     // --- frame independant speed -> time elapsed since last frame ---
     const deltaTime = clock.getDelta();
@@ -108,7 +200,7 @@ function animate() {
     }
     const center = new THREE.Vector3(0, 0, 0);
 
-    for (let i = 0; i < NUM_PARTICLES; i++) {
+    for (let i = 0; i < numParticles; i++) {
         const mesh = particles[i];
         const velocity = velocities[i];
 
@@ -120,8 +212,8 @@ function animate() {
             const distFromCenter = mesh.position.length();
             // --- keep particle from flying away -> pull back ---
             velocity.add(swirlForce);            
-            if (distFromCenter > MAX_RADIUS) {
-                const pullBackStrength = 0.005 * (distFromCenter - MAX_RADIUS + 1);
+            if (distFromCenter > maxRadius) {
+                const pullBackStrength = 0.005 * (distFromCenter - maxRadius + 1);
                 const pullForce = center.clone().sub(mesh.position).multiplyScalar(pullBackStrength);
                 velocity.add(pullForce);
             }
@@ -142,7 +234,7 @@ function animate() {
             // --- damp trail movements ---
             velocity.multiplyScalar(DAMPING_FACTOR);
             // --- more particles near the front ---
-            const iNormalized = i / (NUM_PARTICLES - 1);
+            const iNormalized = i / (numParticles - 1);
             const offset = Math.floor(TRAIL_SPACING * (mouseHistory.length - 1) * Math.pow(iNormalized, DISTRIBUTION_EXPONENT));
             let targetIndex = mouseHistory.length - 1 - offset;
             if (targetIndex < 0) targetIndex = 0;
@@ -156,8 +248,8 @@ function animate() {
             velocity.z += (Math.random() - 0.5) * COMET_NOISE_STRENGTH;
             // --- keep them from going away too far ---
             const distFromCenter = mesh.position.length();
-            if (distFromCenter > MAX_RADIUS * 2) {
-                const pullBackStrength = 0.0002 * (distFromCenter - MAX_RADIUS + 1);
+            if (distFromCenter > maxRadius * 2) {
+                const pullBackStrength = 0.0002 * (distFromCenter - maxRadius + 1);
                 const pullForce = center.clone().sub(mesh.position).multiplyScalar(pullBackStrength);
                 velocity.add(pullForce);
             }
@@ -170,12 +262,4 @@ function animate() {
     }
     renderer.render(scene, camera);
 }
-// --- switch to comet mode when hovering nav zone -> menu/ new view sections ---
-async function onPointerOver(event) {
-    const navZoneElement = event.target.closest('[data-nav-zone]');
-    if (navZoneElement) {
-        cometMode = true;
-    }
-}
-
 init();
