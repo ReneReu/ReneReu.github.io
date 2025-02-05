@@ -241,8 +241,8 @@ in detail */
     top: 100%;
     position: relative;
     display: none;
-    margin-top: -70vh;
-    padding-top: 70vh;
+    margin-top: -70svh;
+    padding-top: 70svh;
 }
 .projectBoxIn {
     animation: animPrBoxIn  0.8s forwards;
@@ -261,16 +261,16 @@ in detail */
 }
 /* --- project summary/keynotes on top of project box --- */
 .projectBoxInfo {
-    margin-top: 70vh;
-    height: 30vh;
+    margin-top: 70svh;
+    height: 30svh;
     background-color:  var(--color-dark2);
     color: var(--color-primary);
 }
 .projectBoxInfo ::after {
     content: "⇣ SCROLL DOWN ⇣";
     position: fixed;
-    bottom: 2vh;
-    right: 2vw;
+    bottom: 2svh;
+    right: 2svw;
     opacity: 1;
     transition: opacity 0.3s ease;
 }
@@ -279,7 +279,7 @@ in detail */
 /* --- viewport sized panels for various project details/media --- */
 /*#region*/
 .projectBoxPanel {
-    height: 100vh;
+    height: 100svh;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -297,15 +297,15 @@ in detail */
 }
 .projectBoxPanel figcaption {
     position: absolute;
-    margin-top: 75vh;
+    margin-top: 75svh;
     margin-left: 0vw;
-    height: 10vh;
-    width: 60vw;
+    height: 10svh;
+    width: 60svw;
     border: var(--border-style2);
     background-color: #757575;
 }
 .projectBoxPanelEnd {
-    height: 10vh;
+    height: 10svh;
     background-color: red;
 }
 /*#endregion*/
