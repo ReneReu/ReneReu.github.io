@@ -103,8 +103,8 @@ export let showcaseAnimationState = false;
     function onTouchEnd(event) {
         if (!showcaseAnimationState) {
             const endY = event.changedTouches[0].clientY;
-            scrollUp = startY - endY <= -150; // True with downward swipe motion
-            if (Math.abs(startY - endY) >= 150) showcaseDirection(); // Check swipe distance
+            scrollUp = startY - endY <= -80; // True with downward swipe motion
+            if (Math.abs(startY - endY) >= 80) showcaseDirection(); // Check swipe distance
         }
     }       
     //--- showcase frame scroll/swipe listeners on ---  

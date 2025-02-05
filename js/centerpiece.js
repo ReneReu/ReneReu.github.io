@@ -39,7 +39,7 @@ const raycaster = new THREE.Raycaster();
 // --- normalited mouse position and 3d after raycasting ---
 const mouseNDC = new THREE.Vector2();
 const mousePos = new THREE.Vector3();
-
+// --- canvas ---
 const centerpieceDiv = document.querySelector(".centerPiece");
 
 function isMobile() {
