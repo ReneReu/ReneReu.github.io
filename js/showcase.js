@@ -36,7 +36,7 @@ export let showcaseAnimationState = false;
         //--- click on showcase frame to open detailed view ---     
         showcaseFrame.addEventListener("click", enableProjectView);              
     }
-    //--- close showcase view + animations and call toStartView() ---
+    //--- close showcase view + animations ---
     export async function closeShowcase() {
         nextShowcaseNumber = -1;
         showcaseBackToStartButton.classList.add("opacityNone");        

@@ -1,0 +1,18 @@
+/*CSS for the contact section of the website. */
+
+/* --- content adjustments contact zone--- */
+.contactContent {
+    width: 100%;
+    display: flex;
+    flex-grow: 1;
+}
+.contactBox {
+    height: 100%;
+    width: 80%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    overflow: hidden;
+    padding-top: var(--headerBot-height);
+}

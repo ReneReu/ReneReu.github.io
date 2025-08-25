@@ -20,6 +20,8 @@
     <link href="css/header.css" media="screen" rel="stylesheet">    
     <link href="css/index.css" media="screen" rel="stylesheet">
     <link href="css/showcase.css" media="screen" rel="stylesheet">
+    <link href="css/art.css" media="screen" rel="stylesheet">
+    <link href="css/contact.css" media="screen" rel="stylesheet">
 
     <script src="js/loading.js" type="module"></script>
     <script src="js/main.js" type="module" defer></script>    
@@ -49,7 +51,7 @@
         <h1 class="headerTop">
             <div class="logo">
                 <a href="index.html" title="Portfolio">
-                    <img class="logoImg" src="img/logo.svg" alt="logo">
+                    <img class="logoImg" src="img/logo/logoStripes.svg" alt="logo">
                 </a>         
                 <a class="logoName" href="index.html">RenReu</a>
             </div>
@@ -64,8 +66,8 @@
                 <li><div class="menuButton">.</div></li>  
                 <li><div class="menuButton menuButtonActive" data-nav-zone="0">Start</div></li>
                 <li><div class="menuButton" data-nav-zone="1">Projects</div></li>
-                <li><a href="art.html"><div class="menuButton" data-nav-zone="2" >Art</div></a></li>      
-                <li><a href="wavequill.html"><div class="menuButton" data-nav-zone="3">Contact</div></a></li>                
+                <li><div class="menuButton" data-nav-zone="2" >Art</div></li>      
+                <li><div class="menuButton" data-nav-zone="3">Contact</div></li>                
             </ul>      
         </nav>   
     </header>
@@ -84,7 +86,7 @@
         <section class="showcaseContent displayNone">   
             <!--------------- Selection of Work --------------->
             <nav class="showcaseNavigation">
-                <button class="showcaseBackToStartButton opacityNone" data-nav-zone="0" aria-label="Back to Start"></button>
+                <div class="showcaseBackToStartButton opacityNone" data-nav-zone="0" role="navigation" aria-label="Back to Start"></div>
                 
                 <div class="showcaseSidebar">
                     <div class="showcaseSidebarButton">
@@ -125,7 +127,7 @@
             
             <section class="projectBox displayNone">
                 <!-- edit anim on article instead of projextBox-->        
-                <button class="projectReturnButton" aria-label="Back to Showcase menu"></button>
+                <div class="projectReturnButton" role="navigation" aria-label="Back to Showcase menu"></div>
 
                 <article id="project0" class="projectBoxPanelContainer">                    
                     <header class="projectBoxInfo">
@@ -193,7 +195,41 @@
 
                     <div class="projectBoxPanelEnd"></div>  
                 </article>
-            </section>        
+            </section>   
+        </section>     
+
+        <section class="artContent displayNone">
+            <section class="artBox">               
+                <div class="gallery">
+                    <div class="gallery-main">
+                        <img id="gallery-main-img" src="img/w10.avif" alt="Selected" />
+                    </div>
+                    <div class="gallery-thumbs" id="gallery-thumbs">
+                        <!-- Thumbnails go here -->
+                        <img src="img/w10.avif" alt="Thumb 1" data-index="0" />
+                        <img src="img/w11.avif" alt="Thumb 2" data-index="1" />
+                        <img src="img/w12.avif" alt="Thumb 3" data-index="2" />
+                        <img src="img/w13.avif" alt="Thumb 4" data-index="3" />
+                        <img src="img/w14.avif" alt="Thumb 5" data-index="4" />
+                        <img src="img/w20.avif" alt="Thumb 6" data-index="5" />
+                        <img src="img/w10.avif" alt="Thumb 7" data-index="6" />
+                        <img src="img/w11.avif" alt="Thumb 8" data-index="7" />
+                        <img src="img/w12.avif" alt="Thumb 9" data-index="8" />
+                        <img src="img/w13.avif" alt="Thumb 10" data-index="9" />
+                        <img src="img/w14.avif" alt="Thumb 11" data-index="10" />
+                        <img src="img/w20.avif" alt="Thumb 12" data-index="11" />
+                    </div>
+                </div>
+
+            </section>
+        </section>
+
+        <section class="contactContent displayNone">
+            <section class="contactBox">
+                <h2>CONTACT</h2>
+                <a href="wavequill.html">WaveQuill</a>
+            </section>
+        </section>
     </main>
 </body>    
 </html>
