@@ -22,11 +22,11 @@ in detail */
     background-position: 50% -100%;
     background-repeat: no-repeat;    
     background-size: 40px 40px;
+    text-align: center;
 }
 .showcaseBackToStartButton::after{
     content: "BACK";
     display: block;
-    justify-self: center;
     margin-top: 24px;
 }
 
@@ -222,7 +222,7 @@ in detail */
 }
 /* --- return from project to showcase view button + animation --- */
 .projectReturnButton {
-    z-index: 90;
+    z-index: 80;
     position: fixed;
     right: 2%;    
     height: 50px;
@@ -232,15 +232,15 @@ in detail */
     transition: transform 0.8s ease;
     color: var(--color-primary);
     background-image: url("../img/icons/backWhiteC.svg");
-    background-position: 50% -40%;
+    background-position: 50% 10%;
     background-repeat: no-repeat;    
     background-size: 40px 40px;    
+    text-align: center;
 }
 .projectReturnButton::after{
     content: "BACK";
     display: block;
-    justify-self: center;
-    margin-top: 30px;
+    margin-top: 35px;
 }
 .projectReturnButtonIn {
     transform: translateY(0);
