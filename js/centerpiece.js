@@ -1,4 +1,4 @@
-import {delay} from "./utils.js"
+import {} from "./utils.js"
 
 // --- consts ---
 const NUM_PARTICLES = 120;
@@ -34,7 +34,7 @@ let lastTouchTime = 0;
 let numParticles;
 let maxRadius;
 
-// --- Raycasting for correct mouse position ---
+// --- raycasting for correct mouse position ---
 const raycaster = new THREE.Raycaster();
 // --- normalited mouse position and 3d after raycasting ---
 const mouseNDC = new THREE.Vector2();
@@ -46,7 +46,7 @@ function isMobile() {
     return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia("(max-width: 768px)").matches;
 }
 
-export function setupCenterpiece() {
+export function startCenterpiece() {
     cometMode = false;    
     if (isMobile()) {
         maxRadius = MAX_RADIUS_MOBILE;
@@ -67,6 +67,8 @@ export function closeCenterpiece() {
     removeMobileListener();
     isAnimating = false;
 }
+
+// --- event listeners ---
 function addDesktopListener() {
     window.addEventListener("pointermove", onPointerMove, { passive: true });    
     window.addEventListener("mousedown", onMouseDown);
@@ -98,8 +100,10 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
     // --- in case desktop/mobile switch happened ---
-    setupCenterpiece();
+    startCenterpiece();
 }
+
+// --- mouse control ---
 function onPointerMove(event) {
     // --- centerPiece bounding ---
     const rect = centerpieceDiv.getBoundingClientRect();
@@ -111,10 +115,22 @@ function onPointerMove(event) {
     const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     raycaster.ray.intersectPlane(planeZ, mousePos);
 }
-function onMouseDown(event) {
+function updateMousePosition(clientX, clientY) {
+    const rect = centerpieceDiv.getBoundingClientRect();
+    mouseNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouseNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouseNDC, camera);
+    const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    raycaster.ray.intersectPlane(planeZ, mousePos);
+}
+function resetMousePosition() {
+    mousePos.set(0, 0, 0);
+}
+function onMouseDown() {
     cometMode = true;
 }
-function onMouseUp(event) {
+function onMouseUp() {
     cometMode = false;
 }
 // --- touch control ---
@@ -135,18 +151,6 @@ function onTouchMove(event) {
 function onTouchEnd() {
     cometMode = false;
     resetMousePosition();
-}
-function updateMousePosition(clientX, clientY) {
-    const rect = centerpieceDiv.getBoundingClientRect();
-    mouseNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-    mouseNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
-
-    raycaster.setFromCamera(mouseNDC, camera);
-    const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-    raycaster.ray.intersectPlane(planeZ, mousePos);
-}
-function resetMousePosition() {
-    mousePos.set(0, 0, 0);
 }
 
 function init() {
@@ -184,7 +188,7 @@ function init() {
         velocities.push(velocity);
         scene.add(mesh);
     }
-    setupCenterpiece();
+    startCenterpiece();
     animate();
 }
 function animate() {

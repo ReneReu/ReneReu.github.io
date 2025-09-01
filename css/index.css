@@ -16,8 +16,12 @@
     display: flex;
     justify-content: center;
     align-items: center; 
-    padding: 50px;
-    margin-top: var(--header-height);
+    margin-top: calc(var(--header-height) / 2);
+}
+@media (max-height: 450px) {
+    .centerPiece {
+        margin-top: 0;
+    }   
 }
 /* --- Section/Link to showcase zone --- */
 .startToShowcase {

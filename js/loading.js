@@ -4,6 +4,8 @@ import {waitForAnimation, delay} from "./utils.js";
 
 window.addEventListener("load", loaded);
 
+let loadingTime = 1000;
+
 const imagesToPreload = [
     "img/w10.avif",
     "img/w20.avif",
@@ -24,13 +26,14 @@ function preloadImages(imageUrls) {
         })
     );
 }
-/* --- loading completed --- */       
+export function addLoadingTime(time) {
+    loadingTime += time;
+}
+//--- loading completed ---  
 async function loaded() {
     const loadingScreen = document.querySelector(".loadingScreen");
-    const loadingTime = 1000;
     // --- wait for all images to preload and the minimum loading time --- 
     await Promise.all([preloadImages(imagesToPreload), delay(loadingTime)]);
-    // 
     await waitForAnimation(loadingScreen, "loadedAnimation");
     await delay(loadingTime);
     loadingScreen.style.willChange = "auto";

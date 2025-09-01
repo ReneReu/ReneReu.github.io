@@ -2,16 +2,17 @@
 
 import {collapseMobileMenu} from "./mobileMenu.js";
 //--- interface with other view sections of the website ---
-import {showcaseAnimationState, startShowcase, closeShowcase} from "./showcase.js";
+import {startShowcase, closeShowcase, showcaseAnimationState, jumpToProjectView} from "./showcase.js";
 import {startArt, closeArt} from "./art.js";
 import {startContact, closeContact} from "./contact.js";
 //--- interface with centerpiece section ---
-import {setupCenterpiece, closeCenterpiece} from "./centerpiece.js";
+import {startCenterpiece, closeCenterpiece} from "./centerpiece.js";
+
+import {addLoadingTime} from "./loading.js";
+import {setViewParamURL} from "./utils.js";
 
 
 //--- Functions for switching between start and showcase view ---
-const header = document.querySelector(".header");
-const menuButton = document.querySelectorAll(".menuButton");
 const startContent = document.querySelector(".startContent");
 //--- 0 Start - 1 Showcase - 2 Art - 3 Contact
 let activeView = 0;
@@ -39,25 +40,29 @@ const transitionFunctions = {
         2: () => switchView(closeContact, startArt),
     }
 };
+//--- start/close landing view ---
 function startLanding() {
     startContent.classList.remove("displayNone");
-    setupCenterpiece();
+    startCenterpiece();
 }
-async function closeLanding() {
-    await closeCenterpiece();
+function closeLanding() {
+    closeCenterpiece();
     startContent.classList.add("displayNone");
 }
 //--- helper to switch between views with async close and start functions ---
 async function switchView (closeFunction, startFunction) {
     try {
         await closeFunction();
-        startFunction();
+        await startFunction();
     } catch (e) {
-        console.error("Error in switch:", e);
+        console.error("Error in switching views:", e);
     } 
 };
 //--- update header state and menu ---
 function updateHeader(targetView) {
+    const header = document.querySelector(".header");
+    const menuButton = document.querySelectorAll(".menuButton");
+    
     activeView = targetView;
     //--- normal header on start view - other views have minimized header ---
     if (activeView === 0) {
@@ -74,21 +79,47 @@ function updateHeader(targetView) {
     collapseMobileMenu();
 };
 //--- navigate from active to target view and transition 
-async function navigateTo(targetView) {
-    if (activeView !== targetView && !showcaseAnimationState) {
+async function navigateToView(targetView) {
+    if (activeView !== targetView && !activeAnimation()) {
         const transitionFunction = transitionFunctions[activeView]?.[targetView];
         if (transitionFunction) {
-            transitionFunction(); 
             updateHeader(targetView);
+            setViewParamURL(targetView);
+            await transitionFunction();            
         } else {
             console.warn("No transition defined for this view change.");
         }
     }
 }
+//--- check if any animation is active // expand with other animationStates ---
+function activeAnimation() {
+    return showcaseAnimationState;
+}
 //--- nav event listeners ---
 document.querySelectorAll("[data-nav-zone]").forEach(element => {
     //--- get the value of data-nav-zone from the element ---
     const targetView = parseInt(element.dataset.navZone, 10);
-    element.addEventListener("click", () => navigateTo(targetView));
+    element.addEventListener("click", () => navigateToView(targetView));
 });
 
+//--- check URL parameters -> direct navigation to a specific view or project ---
+window.addEventListener("DOMContentLoaded", async () => {
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get("view");
+    const projectParam = params.get("project");
+
+    const isProjectViewJump = (projectParam !== null && viewParam === '1');
+    
+    if (isProjectViewJump) {
+        addLoadingTime(750);
+        //addLoadingTime(350);
+    }
+
+    if (viewParam !== null && viewParam !== '0') {
+        await navigateToView(parseInt(viewParam, 10));
+
+        if (isProjectViewJump) {     
+            await jumpToProjectView(parseInt(projectParam, 10));
+        }  
+    }    
+});

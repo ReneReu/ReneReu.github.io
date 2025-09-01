@@ -39,9 +39,9 @@ document.addEventListener("click", (e) => {
         handleClickOutside(e, header, collapseMobileMenu);
     }
 });
-//--- collapse mobile menu when screen wider than 800 ---
+//--- collapse mobile menu when screen wider than 650 ---
 function wideScreenCollapseMenu() {
-    if (window.innerWidth > 800) {
+    if (window.innerWidth > 650) {
         collapseMobileMenu();
     }
 }

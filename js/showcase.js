@@ -1,6 +1,6 @@
 //--- Showcase Work presentation ---
 
-import {waitForAnimation, elementViewportObserver, waitForScrollTop} from "./utils.js"; 
+import {waitForAnimation, elementViewportObserver, waitForScrollTop, setViewParamURL, addParamToURL} from "./utils.js"; 
 
 //--- frequently used DOM elements ---
 const showcaseContent = document.querySelector(".showcaseContent");
@@ -26,7 +26,7 @@ export let showcaseAnimationState = false;
         //--- play animation for first showcase frame (transition frame 0 to 1) ---
         nextShowcaseFrame();
         //--- after first part of animation ---
-        await waitForAnimation(showcaseBox)
+        await waitForAnimation(showcaseBox);
         showcaseTitle.classList.add("showcaseTitleDeco");  
         showcaseBackToStartButton.classList.remove("opacityNone");
         showcaseSidebar.classList.add("showcaseSidebarIn");
@@ -34,7 +34,8 @@ export let showcaseAnimationState = false;
         //--- activate scroll and touch event listener ---
         eventListenerShowcaseNavigationOn();
         //--- click on showcase frame to open detailed view ---     
-        showcaseFrame.addEventListener("click", enableProjectView);              
+        showcaseFrame.addEventListener("click", enableProjectView);
+        await waitForAnimation(showcaseBox);                
     }
     //--- close showcase view + animations ---
     export async function closeShowcase() {
@@ -54,7 +55,18 @@ export let showcaseAnimationState = false;
         //--- reset animation classes and initialize start view after second part of animation ---
         resetShowcaseAnimation();
         showcaseContent.classList.add("displayNone");        
-    }    
+    }
+    //--- jump directly to a specific project from URL parameter ---
+    export async function jumpToProjectView(num) {
+        // --- validate project number ---
+        if (num < 0 || num > showcaseItems) {
+            console.warn("Invalid project number");
+            return;
+        };
+        nextShowcaseNumber = num;    
+        await nextShowcaseFrame(); 
+        enableProjectView();
+    } 
     //--- sidebar navigation initializing each button + animation ---
     function initShowcaseSidebarButtons() {        
         showcaseSidebarButtons.forEach((button, index) => {
@@ -241,6 +253,7 @@ function enableProjectView() {
         //--- prevent switching of showcase frames ---
         showcaseAnimationState = true;
         eventListenerShowcaseNavigationOff();
+        addParamToURL("project", activeShowcaseNumber);
     }    
 };
 async function disableProjectView() {
@@ -261,6 +274,7 @@ async function disableProjectView() {
         //--- add listener back again ---
         showcaseAnimationState = false; 
         eventListenerShowcaseNavigationOn();
+        setViewParamURL(1);
     }      
 };
 //--- open detailed project view --- 

@@ -77,3 +77,16 @@ export function waitForScrollTop(element) {
         }, 50);
     });
 }
+//--- update URL parameters for view and additional param (eg. project) ---
+export function setViewParamURL(view) {
+    const params = new URLSearchParams();
+    params.set("view", view);
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    history.pushState({ view }, "", newUrl);
+}
+export function addParamToURL(key, value) {
+    const params = new URLSearchParams(window.location.search);
+    params.set(key, value);
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    history.replaceState({ ...history.state, [key]: value }, "", newUrl);
+}
